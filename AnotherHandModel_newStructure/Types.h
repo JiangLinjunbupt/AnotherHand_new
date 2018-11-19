@@ -21,7 +21,7 @@ enum shape_type
 
 //关节参数
 const int num_thetas = 26;
-const int num_shape_thetas = 26;
+const int num_shape_thetas = 20;
 typedef Eigen::Matrix<float, num_thetas, 1> Thetas;
 
 

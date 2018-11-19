@@ -44,7 +44,7 @@ void HandModel::load_weight(char* filename)
 }
 void HandModel::Load_HandModel()
 {
-	this->load_vertices(".\\model\\Vertices.txt");
+	this->load_vertices(".\\model\\Adjust_Vertices.txt");
 	this->load_faces(".\\model\\Faces.txt");
 	this->load_weight(".\\model\\Weight.txt");
 }
@@ -156,7 +156,7 @@ void HandModel::Init_HandModel()
 			Joints[0].joint_name = "Wrist";
 			Joints[0].joint_index = 0;
 			Joints[0].GlobalInitPosition << 0.0f, 0.0f, 0.0f, 1.0f;
-			Joints[0].ChildGlobalInitPosition << -0.466003f, 81.5657f, -2.2004f, 1.0f;
+			Joints[0].ChildGlobalInitPosition << -0.399423f, 84.5637f, -2.46058f, 1.0f;
 			Joints[0].parent_joint_index = -1;
 
 			Joints[0].pose_params_length = 6;
@@ -168,7 +168,7 @@ void HandModel::Init_HandModel()
 			Joints[0].pose_params_index[4] = 4; Joints[0].pose_params_type[4] = dof_type(y_axis_rotate);
 			Joints[0].pose_params_index[5] = 5; Joints[0].pose_params_type[5] = dof_type(z_axis_rotate);
 
-			Joints[0].shape_params_length = 1;
+			Joints[0].shape_params_length = 3;
 			Joints[0].shape_params_index = new int[3]; Joints[0].shape_params_type = new int[3];
 			Joints[0].shape_params_index[0] = 0; Joints[0].shape_params_type[0] = shape_type(x_axis_scale);
 			Joints[0].shape_params_index[1] = 0; Joints[0].shape_params_type[1] = shape_type(y_axis_scale);
@@ -181,7 +181,7 @@ void HandModel::Init_HandModel()
 				Joints[1].joint_name = "ThumbLower";
 				Joints[1].joint_index = 1;
 				Joints[1].GlobalInitPosition << -28.468f, 27.4715f, -18.4322f, 1.0f;
-				Joints[1].ChildGlobalInitPosition << -57.3719f, 44.0606f, -31.1096f, 1.0f;
+				Joints[1].ChildGlobalInitPosition << -63.5129f, 52.0925f, -35.8438f, 1.0f;
 				Joints[1].parent_joint_index = 0;
 
 				Joints[1].pose_params_length = 2;
@@ -189,18 +189,15 @@ void HandModel::Init_HandModel()
 				Joints[1].pose_params_index[0] = 6; Joints[1].pose_params_type[0] = dof_type(y_axis_rotate);
 				Joints[1].pose_params_index[1] = 7; Joints[1].pose_params_type[1] = dof_type(z_axis_rotate);
 
-				Joints[1].shape_params_length = 3;
-				Joints[1].shape_params_index = new int[3]; Joints[1].shape_params_type = new int[3];
-				Joints[1].shape_params_index[0] = 1; Joints[1].shape_params_type[0] = shape_type(x_axis_trans_);
-				Joints[1].shape_params_index[1] = 2; Joints[1].shape_params_type[1] = shape_type(y_axis_trans_);
-				Joints[1].shape_params_index[2] = 3; Joints[1].shape_params_type[2] = shape_type(z_axis_trans_);
+				Joints[1].shape_params_length = 0;
+				Joints[1].shape_params_index = NULL; Joints[1].shape_params_type = NULL;
 			}
 
 			{
 				Joints[2].joint_name = "ThumbMiddle";
 				Joints[2].joint_index = 2;
-				Joints[2].GlobalInitPosition << -57.3719f, 44.0606f, -31.1096f, 1.0f;
-				Joints[2].ChildGlobalInitPosition << -74.4329f, 66.375f, -44.2624f, 1.0f;
+				Joints[2].GlobalInitPosition << -63.5129f, 52.0925f, -35.8438f, 1.0f;
+				Joints[2].ChildGlobalInitPosition << -80.7877f, 74.8383f, -49.2702f, 1.0f;
 				Joints[2].parent_joint_index = 1;
 
 				Joints[2].pose_params_length = 1;
@@ -209,14 +206,14 @@ void HandModel::Init_HandModel()
 
 				Joints[2].shape_params_length = 1;
 				Joints[2].shape_params_index = new int[1]; Joints[2].shape_params_type = new int[1];
-				Joints[2].shape_params_index[0] = 4; Joints[2].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[2].shape_params_index[0] = 1; Joints[2].shape_params_type[0] = shape_type(x_axis_trans_);
 			}
 
 			{
 				Joints[3].joint_name = "ThumbTop";
 				Joints[3].joint_index = 3;
-				Joints[3].GlobalInitPosition << -74.4329f, 66.375f, -44.2624f, 1.0f;
-				Joints[3].ChildGlobalInitPosition << -85.4636f, 88.6297f, -58.3764f, 1.0f;
+				Joints[3].GlobalInitPosition << -80.7877f, 74.8383f, -49.2702f, 1.0f;
+				Joints[3].ChildGlobalInitPosition << -91.3441f, 96.1361f, -62.7773f, 1.0f;
 				Joints[3].parent_joint_index = 2;
 
 				Joints[3].pose_params_length = 1;
@@ -225,14 +222,14 @@ void HandModel::Init_HandModel()
 
 				Joints[3].shape_params_length = 2;
 				Joints[3].shape_params_index = new int[2]; Joints[3].shape_params_type = new int[2];
-				Joints[3].shape_params_index[0] = 5; Joints[3].shape_params_type[0] = shape_type(x_axis_trans_);
-				Joints[3].shape_params_index[1] = 6; Joints[3].shape_params_type[1] = shape_type(x_axis_scale);
+				Joints[3].shape_params_index[0] = 2; Joints[3].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[3].shape_params_index[1] = 3; Joints[3].shape_params_type[1] = shape_type(x_axis_scale);
 			}
 
 			{
 				Joints[4].joint_name = "ThumbSite";
 				Joints[4].joint_index = 4;
-				Joints[4].GlobalInitPosition << -85.4636f, 88.6297f, -58.3764f, 1.0f;
+				Joints[4].GlobalInitPosition << -91.3441f, 96.1361f, -62.7773f, 1.0f;
 				Joints[4].HasChild = false;
 				Joints[4].parent_joint_index = 3;
 
@@ -249,8 +246,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[5].joint_name = "IndexLower";
 				Joints[5].joint_index = 5;
-				Joints[5].GlobalInitPosition << -25.29f, 82.3287f, -2.863f, 1.0f;
-				Joints[5].ChildGlobalInitPosition << -30.185f, 120.669f, -5.29089f, 1.0f;
+				Joints[5].GlobalInitPosition << -25.5361f, 84.2559f, -2.98504f, 1.0f;
+				Joints[5].ChildGlobalInitPosition << -30.5187f, 123.568f, -5.80625f, 1.0f;
 				Joints[5].parent_joint_index = 0;
 
 				Joints[5].pose_params_length = 2;
@@ -258,17 +255,16 @@ void HandModel::Init_HandModel()
 				Joints[5].pose_params_index[0] = 10; Joints[5].pose_params_type[0] = dof_type(y_axis_rotate);
 				Joints[5].pose_params_index[1] = 11; Joints[5].pose_params_type[1] = dof_type(z_axis_rotate);
 
-				Joints[5].shape_params_length = 2;
-				Joints[5].shape_params_index = new int[2]; Joints[5].shape_params_type = new int[2];
-				Joints[5].shape_params_index[0] = 7; Joints[5].shape_params_type[0] = shape_type(x_axis_trans_);
-				Joints[5].shape_params_index[1] = 8; Joints[5].shape_params_type[1] = shape_type(y_axis_trans_);
+				Joints[5].shape_params_length = 1;
+				Joints[5].shape_params_index = new int[1]; Joints[5].shape_params_type = new int[1];
+				Joints[5].shape_params_index[0] = 4; Joints[5].shape_params_type[0] = shape_type(x_axis_trans_);
 			}
 
 			{
 				Joints[6].joint_name = "IndexMiddle";
 				Joints[6].joint_index = 6;
-				Joints[6].GlobalInitPosition << -30.185f, 120.669f, -5.29089f, 1.0f;
-				Joints[6].ChildGlobalInitPosition << -32.2498f, 143.564f, -14.5545f, 1.0f;
+				Joints[6].GlobalInitPosition << -30.5187f, 123.568f, -5.80625f, 1.0f;
+				Joints[6].ChildGlobalInitPosition << -32.45f, 144.277f, -14.0787f, 1.0f;
 				Joints[6].parent_joint_index = 5;
 
 				Joints[6].pose_params_length = 1;
@@ -277,14 +273,14 @@ void HandModel::Init_HandModel()
 
 				Joints[6].shape_params_length = 1;
 				Joints[6].shape_params_index = new int[1]; Joints[6].shape_params_type = new int[1];
-				Joints[6].shape_params_index[0] = 9; Joints[6].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[6].shape_params_index[0] = 5; Joints[6].shape_params_type[0] = shape_type(x_axis_trans_);
 			}
 
 			{
 				Joints[7].joint_name = "IndexTop";
 				Joints[7].joint_index = 7;
-				Joints[7].GlobalInitPosition << -32.2498f, 143.564f, -14.5545f, 1.0f;
-				Joints[7].ChildGlobalInitPosition << -33.5694f, 165.174f, -24.3519f, 1.0f;
+				Joints[7].GlobalInitPosition << -32.45f, 144.277f, -14.0787f, 1.0f;
+				Joints[7].ChildGlobalInitPosition << -33.5417f, 162.155f, -22.184f, 1.0f;
 				Joints[7].parent_joint_index = 6;
 
 				Joints[7].pose_params_length = 1;
@@ -293,14 +289,14 @@ void HandModel::Init_HandModel()
 
 				Joints[7].shape_params_length = 2;
 				Joints[7].shape_params_index = new int[2]; Joints[7].shape_params_type = new int[2];
-				Joints[7].shape_params_index[0] = 10; Joints[7].shape_params_type[0] = shape_type(x_axis_trans_);
-				Joints[7].shape_params_index[1] = 11; Joints[7].shape_params_type[1] = shape_type(x_axis_scale);
+				Joints[7].shape_params_index[0] = 6; Joints[7].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[7].shape_params_index[1] = 7; Joints[7].shape_params_type[1] = shape_type(x_axis_scale);
 			}
 
 			{
 				Joints[8].joint_name = "IndexSite";
 				Joints[8].joint_index = 8;
-				Joints[8].GlobalInitPosition << -33.5694f, 165.174f, -24.3519f, 1.0f;
+				Joints[8].GlobalInitPosition << -33.5417f, 162.155f, -22.184f, 1.0f;
 				Joints[8].HasChild = false;
 				Joints[8].parent_joint_index = 7;
 
@@ -317,8 +313,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[9].joint_name = "MiddleLower";
 				Joints[9].joint_index = 9;
-				Joints[9].GlobalInitPosition << -0.466003f, 81.5657f, -2.2004f, 1.0f;
-				Joints[9].ChildGlobalInitPosition << 0.555016f, 127.541f, -6.19035f, 1.0f;
+				Joints[9].GlobalInitPosition << -0.399423f, 84.5637f, -2.46058f, 1.0f;
+				Joints[9].ChildGlobalInitPosition << 0.735502f, 129.175f, -5.76824f, 1.0f;
 				Joints[9].parent_joint_index = 0;
 
 				Joints[9].pose_params_length = 2;
@@ -328,14 +324,14 @@ void HandModel::Init_HandModel()
 
 				Joints[9].shape_params_length = 1;
 				Joints[9].shape_params_index = new int[1]; Joints[9].shape_params_type = new int[1];
-				Joints[9].shape_params_index[0] = 12; Joints[9].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[9].shape_params_index[0] = 8; Joints[9].shape_params_type[0] = shape_type(x_axis_trans_);
 			}
 
 			{
 				Joints[10].joint_name = "MiddleMiddle";
 				Joints[10].joint_index = 10;
-				Joints[10].GlobalInitPosition << 0.555016f, 127.541f, -6.19035f, 1.0f;
-				Joints[10].ChildGlobalInitPosition << -1.544f, 152.677f, -18.7633f, 1.0f;
+				Joints[10].GlobalInitPosition << 0.735502f, 129.175f, -5.76824f, 1.0f;
+				Joints[10].ChildGlobalInitPosition << -1.19208f, 152.724f, -17.399f, 1.0f;
 				Joints[10].parent_joint_index = 9;
 
 				Joints[10].pose_params_length = 1;
@@ -344,14 +340,14 @@ void HandModel::Init_HandModel()
 
 				Joints[10].shape_params_length = 1;
 				Joints[10].shape_params_index = new int[1]; Joints[10].shape_params_type = new int[1];
-				Joints[10].shape_params_index[0] = 13; Joints[10].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[10].shape_params_index[0] = 9; Joints[10].shape_params_type[0] = shape_type(x_axis_trans_);
 			}
 
 			{
 				Joints[11].joint_name = "MiddleTop";
 				Joints[11].joint_index = 11;
-				Joints[11].GlobalInitPosition << -1.544f, 152.677f, -18.7633f, 1.0f;
-				Joints[11].ChildGlobalInitPosition << -3.97699f, 175.197f, -32.1354f, 1.0f;
+				Joints[11].GlobalInitPosition << -1.19208f, 152.724f, -17.399f, 1.0f;
+				Joints[11].ChildGlobalInitPosition << -3.1667f, 171.001f, -28.2518f, 1.0f;
 				Joints[11].parent_joint_index = 10;
 
 				Joints[11].pose_params_length = 1;
@@ -360,14 +356,14 @@ void HandModel::Init_HandModel()
 
 				Joints[11].shape_params_length = 2;
 				Joints[11].shape_params_index = new int[2]; Joints[11].shape_params_type = new int[2];
-				Joints[11].shape_params_index[0] = 14; Joints[11].shape_params_type[0] = shape_type(x_axis_trans_);
-				Joints[11].shape_params_index[1] = 15; Joints[11].shape_params_type[1] = shape_type(x_axis_scale);
+				Joints[11].shape_params_index[0] = 10; Joints[11].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[11].shape_params_index[1] = 11; Joints[11].shape_params_type[1] = shape_type(x_axis_scale);
 			}
 
 			{
 				Joints[12].joint_name = "MiddleSite";
 				Joints[12].joint_index = 12;
-				Joints[12].GlobalInitPosition << -3.97699f, 175.197f, -32.1354f, 1.0f;
+				Joints[12].GlobalInitPosition << -3.1667f, 171.001f, -28.2518f, 1.0f;
 				Joints[12].HasChild = false;
 				Joints[12].parent_joint_index = 11;
 
@@ -384,8 +380,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[13].joint_name = "RingLower";
 				Joints[13].joint_index = 13;
-				Joints[13].GlobalInitPosition << 18.433f, 78.3977f, -5.57517f, 1.0f;
-				Joints[13].ChildGlobalInitPosition << 25.829f, 121.182f, -10.9752f, 1.0f;
+				Joints[13].GlobalInitPosition << 17.9766f, 75.7575f, -5.24194f, 1.0f;
+				Joints[13].ChildGlobalInitPosition << 25.3781f, 116.629f, -9.22043f, 1.0f;
 				Joints[13].parent_joint_index = 0;
 
 				Joints[13].pose_params_length = 2;
@@ -393,17 +389,16 @@ void HandModel::Init_HandModel()
 				Joints[13].pose_params_index[0] = 18; Joints[13].pose_params_type[0] = dof_type(y_axis_rotate);
 				Joints[13].pose_params_index[1] = 19; Joints[13].pose_params_type[1] = dof_type(z_axis_rotate);
 
-				Joints[13].shape_params_length = 2;
-				Joints[13].shape_params_index = new int[2]; Joints[13].shape_params_type = new int[2];
-				Joints[13].shape_params_index[0] = 16; Joints[13].shape_params_type[0] = shape_type(x_axis_trans_);
-				Joints[13].shape_params_index[1] = 17; Joints[13].shape_params_type[1] = shape_type(y_axis_trans_);
+				Joints[13].shape_params_length = 1;
+				Joints[13].shape_params_index = new int[1]; Joints[13].shape_params_type = new int[1];
+				Joints[13].shape_params_index[0] = 12; Joints[13].shape_params_type[0] = shape_type(x_axis_trans_);
 			}
 
 			{
 				Joints[14].joint_name = "RingMiddle";
 				Joints[14].joint_index = 14;
-				Joints[14].GlobalInitPosition << 25.829f, 121.182f, -10.9752f, 1.0f;
-				Joints[14].ChildGlobalInitPosition << 25.771f, 141.244f, -25.8824f, 1.0f;
+				Joints[14].GlobalInitPosition << 25.3781f, 116.629f, -9.22043f, 1.0f;
+				Joints[14].ChildGlobalInitPosition << 25.3024f, 137.195f, -24.547f, 1.0f;
 				Joints[14].parent_joint_index = 13;
 
 				Joints[14].pose_params_length = 1;
@@ -412,14 +407,14 @@ void HandModel::Init_HandModel()
 			
 				Joints[14].shape_params_length = 1;
 				Joints[14].shape_params_index = new int[1]; Joints[14].shape_params_type = new int[1];
-				Joints[14].shape_params_index[0] = 18; Joints[14].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[14].shape_params_index[0] = 13; Joints[14].shape_params_type[0] = shape_type(x_axis_trans_);
 			}
 
 			{
 				Joints[15].joint_name = "RingTop";
 				Joints[15].joint_index = 15;
-				Joints[15].GlobalInitPosition << 25.771f, 141.244f, -25.8824f, 1.0f;
-				Joints[15].ChildGlobalInitPosition << 25.114f, 159.881f, -41.3909f, 1.0f;
+				Joints[15].GlobalInitPosition << 25.3024f, 137.195f, -24.547f, 1.0f;
+				Joints[15].ChildGlobalInitPosition << 24.7268f, 153.522f, -38.1339f, 1.0f;
 				Joints[15].parent_joint_index = 14;
 
 				Joints[15].pose_params_length = 1;
@@ -428,14 +423,14 @@ void HandModel::Init_HandModel()
 
 				Joints[15].shape_params_length = 2;
 				Joints[15].shape_params_index = new int[2]; Joints[15].shape_params_type = new int[2];
-				Joints[15].shape_params_index[0] = 19; Joints[15].shape_params_type[0] = shape_type(x_axis_trans_);
-				Joints[15].shape_params_index[1] = 20; Joints[15].shape_params_type[1] = shape_type(x_axis_scale);
+				Joints[15].shape_params_index[0] = 14; Joints[15].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[15].shape_params_index[1] = 15; Joints[15].shape_params_type[1] = shape_type(x_axis_scale);
 			}
 
 			{
 				Joints[16].joint_name = "RingSite";
 				Joints[16].joint_index = 16;
-				Joints[16].GlobalInitPosition << 25.114f, 159.881f, -41.3909f, 1.0f;
+				Joints[16].GlobalInitPosition << 24.7268f, 153.522f, -38.1339f, 1.0f;
 				Joints[16].HasChild = false;
 				Joints[16].parent_joint_index = 15;
 
@@ -453,8 +448,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[17].joint_name = "PinkeyLower";
 				Joints[17].joint_index = 17;
-				Joints[17].GlobalInitPosition << 35.353f, 70.1487f, -9.93717f, 1.0f;
-				Joints[17].ChildGlobalInitPosition << 45.5f, 96.8537f, -17.9839f, 1.0f;
+				Joints[17].GlobalInitPosition << 33.4795f, 65.2179f, -8.45142f, 1.0f;
+				Joints[17].ChildGlobalInitPosition << 44.1109f, 94.4087f, -18.2167f, 1.0f;
 				Joints[17].parent_joint_index = 0;
 
 				Joints[17].pose_params_length = 2;
@@ -462,17 +457,16 @@ void HandModel::Init_HandModel()
 				Joints[17].pose_params_index[0] = 22; Joints[17].pose_params_type[0] = dof_type(y_axis_rotate);
 				Joints[17].pose_params_index[1] = 23; Joints[17].pose_params_type[1] = dof_type(z_axis_rotate);
 
-				Joints[17].shape_params_length = 2;
-				Joints[17].shape_params_index = new int[2]; Joints[17].shape_params_type = new int[2];
-				Joints[17].shape_params_index[0] = 21; Joints[17].shape_params_type[0] = shape_type(x_axis_trans_);
-				Joints[17].shape_params_index[1] = 22; Joints[17].shape_params_type[1] = shape_type(y_axis_trans_);
+				Joints[17].shape_params_length = 1;
+				Joints[17].shape_params_index = new int[1]; Joints[17].shape_params_type = new int[1];
+				Joints[17].shape_params_index[0] = 16; Joints[17].shape_params_type[0] = shape_type(x_axis_trans_);
 			}
 
 			{
 				Joints[18].joint_name = "PinkeyMiddle";
 				Joints[18].joint_index = 18;
-				Joints[18].GlobalInitPosition << 45.5f, 96.8537f, -17.9839f, 1.0f;
-				Joints[18].ChildGlobalInitPosition << 48.758f, 113.572f, -29.5418f, 1.0f;
+				Joints[18].GlobalInitPosition << 44.1109f, 94.4087f, -18.2167f, 1.0f;
+				Joints[18].ChildGlobalInitPosition << 47.1591f, 109.145f, -28.3087f, 1.0f;
 				Joints[18].parent_joint_index = 17;
 
 				Joints[18].pose_params_length = 1;
@@ -481,14 +475,14 @@ void HandModel::Init_HandModel()
 
 				Joints[18].shape_params_length = 1;
 				Joints[18].shape_params_index = new int[1]; Joints[18].shape_params_type = new int[1];
-				Joints[18].shape_params_index[0] = 23; Joints[18].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[18].shape_params_index[0] = 17; Joints[18].shape_params_type[0] = shape_type(x_axis_trans_);
 			}
 
 			{
 				Joints[19].joint_name = "PinkeyTop";
 				Joints[19].joint_index = 19;
-				Joints[19].GlobalInitPosition << 48.758f, 113.572f, -29.5418f, 1.0f;
-				Joints[19].ChildGlobalInitPosition << 50.609f, 131.057f, -42.4748f, 1.0f;
+				Joints[19].GlobalInitPosition << 47.1591f, 109.145f, -28.3087f, 1.0f;
+				Joints[19].ChildGlobalInitPosition << 48.8287f, 124.917f, -39.9742f, 1.0f;
 				Joints[19].parent_joint_index = 18;
 
 				Joints[19].pose_params_length = 1;
@@ -497,14 +491,14 @@ void HandModel::Init_HandModel()
 			
 				Joints[19].shape_params_length = 2;
 				Joints[19].shape_params_index = new int[2]; Joints[19].shape_params_type = new int[2];
-				Joints[19].shape_params_index[0] = 24; Joints[19].shape_params_type[0] = shape_type(x_axis_trans_);
-				Joints[19].shape_params_index[1] = 25; Joints[19].shape_params_type[1] = shape_type(x_axis_scale);
+				Joints[19].shape_params_index[0] = 18; Joints[19].shape_params_type[0] = shape_type(x_axis_trans_);
+				Joints[19].shape_params_index[1] = 19; Joints[19].shape_params_type[1] = shape_type(x_axis_scale);
 			}
 
 			{
 				Joints[20].joint_name = "PinkeySite";
 				Joints[20].joint_index = 20;
-				Joints[20].GlobalInitPosition << 50.609f, 131.057f, -42.4748f, 1.0f;
+				Joints[20].GlobalInitPosition << 48.8287f, 124.917f, -39.9742f, 1.0f;
 				Joints[20].HasChild = false;
 				Joints[20].parent_joint_index = 19;
 
@@ -526,35 +520,30 @@ void HandModel::Init_HandModel()
 	//shape_params的对应关系
 	// 0  --------- 整体的scale   拉长或者缩短
 
-	// 1  --------- thumb_MCP_trans_x
-	// 2  --------- thumb_MCP_trans_y
-	// 3  --------- thumb_MCP_trans_z             
-	// 4  --------- thumb_PIP_trans_x             
-	// 5  --------- thumb_DPI_trans_x           
-	// 6  --------- thumb_DPI_scale_x
+	// 1  --------- thumb_PIP_trans_x             
+	// 2  --------- thumb_DPI_trans_x           
+	// 3  --------- thumb_DPI_scale_x
 
-	// 7  --------- Index_MCP_trans_x
-	// 8 --------- Index_MCP_trans_y
-	// 9 --------- Index_PIP_trans_x
-	// 10 --------- Index_DIP_trans_x
-	// 11 --------- Index_DIP_scale_x
+	// 4  --------- Index_MCP_trans_x
+	// 5 --------- Index_PIP_trans_x
+	// 6 --------- Index_DIP_trans_x
+	// 7 --------- Index_DIP_scale_x
 
-	// 12  --------- Middle_MCP_trans_x
-	// 13  --------- Middle_PIP_trans_x
-	// 14  --------- Middle_DIP_trans_x
-	// 15  --------- Middle_DIP_scale_x             
+	// 8  --------- Middle_MCP_trans_x
+	// 9  --------- Middle_PIP_trans_x
+	// 10  --------- Middle_DIP_trans_x
+	// 11  --------- Middle_DIP_scale_x             
 
-	// 16  --------- Ring_MCP_trans_x
-	// 17  --------- Ring_MCP_trans_y
-	// 18  --------- Ring_PIP_trans_x
-	// 19  --------- Ring_DIP_trans_x
-	// 20  --------- Ring_DIP_scale_x
+	// 12  --------- Ring_MCP_trans_x
+	// 13  --------- Ring_PIP_trans_x
+	// 14  --------- Ring_DIP_trans_x
+	// 15  --------- Ring_DIP_scale_x
 
-	// 21  --------- Pinkey_MCP_trans_x
-	// 22  --------- Pinkey_MCP_trans_y
-	// 23  --------- Pinkey_PIP_trans_x
-	// 24  --------- Pinkey_DIP_trans_x
-	// 25  --------- Pinkey_DIP_scale_x
+	// 16  --------- Pinkey_MCP_trans_x
+	// 17  --------- Pinkey_PIP_trans_x
+	// 18  --------- Pinkey_DIP_trans_x
+	// 19  --------- Pinkey_DIP_scale_x
+
 	this->Params = new float[NumberofParams]();
 	this->Shape_Params = new float[NumofShape_Params]();
 	this->init_Params = new float[NumberofParams]();
@@ -563,30 +552,11 @@ void HandModel::Init_HandModel()
 
 
 	this->Shape_Params[0] = 1.0f; 
-	//thumb
-	this->Shape_Params[4] = 11.164f;
-	this->Shape_Params[5] = 0.5538f;
-	this->Shape_Params[6] = 0.9570f;
-	//index
-	this->Shape_Params[7] = 1.9467f;
-	this->Shape_Params[9] = 1.0523f;
-	this->Shape_Params[10] = -2.4042f;
-	this->Shape_Params[11] = 0.8273f;
-	//middle
-	this->Shape_Params[12] = 3.01f;
-	this->Shape_Params[13] = -1.5294f;
-	this->Shape_Params[14] = -1.8534f;
-	this->Shape_Params[15] = 0.8116f;
-	//ring
-	this->Shape_Params[16] = -2.7f;
-	this->Shape_Params[18] = -2.3834;
-	this->Shape_Params[19] = 0.6558f;
-	this->Shape_Params[20] = 0.8761f;
-	//pinkey
-	this->Shape_Params[21] = -5.48f;
-	this->Shape_Params[23] = 3.0606;
-	this->Shape_Params[24] = -2.474f;
-	this->Shape_Params[25] = 0.9020f;
+	this->Shape_Params[3] = 1.0f;
+	this->Shape_Params[7] =1.0f;
+	this->Shape_Params[11] = 1.0f;
+	this->Shape_Params[15] = 1.0f;
+	this->Shape_Params[19] = 1.0f;
 
 
 	this->set_local_coordinate();
@@ -759,57 +729,49 @@ void HandModel::Updata_rotation_matrix(float* poseparams)
 void HandModel::Updata_TransShape_matrix(float* shapeParams)
 {
 	//shape_params的对应关系
-	// 1  --------- thumb_MCP_trans_x
-	// 2  --------- thumb_MCP_trans_y
-	// 3  --------- thumb_MCP_trans_z
-	// 4  --------- thumb_PIP_trans_x
-	// 5  --------- thumb_DIP_trans_x
-	Eigen::Vector3f thumb_MCP_trans(shapeParams[1], shapeParams[2], shapeParams[3]);
-	Eigen::Vector3f thumb_PIP_trans(shapeParams[4], 0, 0);
-	Eigen::Vector3f thumb_DIP_trans(shapeParams[5], 0, 0);
-	set_one_TransShape(thumb_MCP_trans, 1);
+	// 1  --------- thumb_PIP_trans_x
+	// 2  --------- thumb_DIP_trans_x
+	Eigen::Vector3f thumb_PIP_trans(shapeParams[1], 0, 0);
+	Eigen::Vector3f thumb_DIP_trans(shapeParams[2], 0, 0);
 	set_one_TransShape(thumb_PIP_trans, 2);
 	set_one_TransShape(thumb_DIP_trans, 3);
 
-	// 7  --------- Index_MCP_trans_x
-	// 8 --------- Index_MCP_trans_y
-	// 9 --------- Index_PIP_trans_x
-	// 10 --------- Index_DIP_trans_x
-	Eigen::Vector3f Index_MCP_trans(shapeParams[7], shapeParams[8], 0);
-	Eigen::Vector3f Index_PIP_trans(shapeParams[9], 0, 0);
-	Eigen::Vector3f Index_DIP_trans(shapeParams[10], 0, 0);
+	// 4  --------- Index_MCP_trans_x
+	// 5 --------- Index_MCP_trans_y
+	// 6 --------- Index_PIP_trans_x
+	Eigen::Vector3f Index_MCP_trans(shapeParams[4], 0, 0);
+	Eigen::Vector3f Index_PIP_trans(shapeParams[5], 0, 0);
+	Eigen::Vector3f Index_DIP_trans(shapeParams[6], 0, 0);
 	set_one_TransShape(Index_MCP_trans, 5);
 	set_one_TransShape(Index_PIP_trans, 6);
 	set_one_TransShape(Index_DIP_trans, 7);
 
-	// 12  --------- Middle_MCP_trans_x
-	// 13  --------- Middle_PIP_trans_x
-	// 14  --------- Middle_DIP_trans_x
-	Eigen::Vector3f Middle_MCP_trans(shapeParams[12], 0 , 0);
-	Eigen::Vector3f Middle_PIP_trans(shapeParams[13], 0, 0);
-	Eigen::Vector3f Middle_DIP_trans(shapeParams[14], 0, 0);
+	// 8  --------- Middle_MCP_trans_x
+	// 9  --------- Middle_PIP_trans_x
+	// 10  --------- Middle_DIP_trans_x
+	Eigen::Vector3f Middle_MCP_trans(shapeParams[8], 0 , 0);
+	Eigen::Vector3f Middle_PIP_trans(shapeParams[9], 0, 0);
+	Eigen::Vector3f Middle_DIP_trans(shapeParams[10], 0, 0);
 	set_one_TransShape(Middle_MCP_trans, 9);
 	set_one_TransShape(Middle_PIP_trans, 10);
 	set_one_TransShape(Middle_DIP_trans, 11);
 
-	// 16  --------- Ring_MCP_trans_x
-	// 17  --------- Ring_MCP_trans_y
-	// 18  --------- Ring_PIP_trans_x
-	// 19  --------- Ring_DIP_trans_x
-	Eigen::Vector3f Ring_MCP_trans(shapeParams[16], shapeParams[17], 0);
-	Eigen::Vector3f Ring_PIP_trans(shapeParams[18], 0, 0);
-	Eigen::Vector3f Ring_DIP_trans(shapeParams[19], 0, 0);
+	// 12  --------- Ring_MCP_trans_x
+	// 13  --------- Ring_PIP_trans_x
+	// 14  --------- Ring_DIP_trans_x
+	Eigen::Vector3f Ring_MCP_trans(shapeParams[12], 0, 0);
+	Eigen::Vector3f Ring_PIP_trans(shapeParams[13], 0, 0);
+	Eigen::Vector3f Ring_DIP_trans(shapeParams[14], 0, 0);
 	set_one_TransShape(Ring_MCP_trans, 13);
 	set_one_TransShape(Ring_PIP_trans, 14);
 	set_one_TransShape(Ring_DIP_trans, 15);
 
-	// 21  --------- Pinkey_MCP_trans_x
-	// 22  --------- Pinkey_MCP_trans_y
-	// 23  --------- Pinkey_PIP_trans_x
-	// 24  --------- Pinkey_DIP_trans_x
-	Eigen::Vector3f Pinkey_MCP_trans(shapeParams[21], shapeParams[22], 0);
-	Eigen::Vector3f Pinkey_PIP_trans(shapeParams[23], 0, 0);
-	Eigen::Vector3f Pinkey_DIP_trans(shapeParams[24], 0, 0);
+	// 16  --------- Pinkey_MCP_trans_x
+	// 17  --------- Pinkey_PIP_trans_x
+	// 18  --------- Pinkey_DIP_trans_x
+	Eigen::Vector3f Pinkey_MCP_trans(shapeParams[16], 0, 0);
+	Eigen::Vector3f Pinkey_PIP_trans(shapeParams[17], 0, 0);
+	Eigen::Vector3f Pinkey_DIP_trans(shapeParams[18], 0, 0);
 	set_one_TransShape(Pinkey_MCP_trans, 17);
 	set_one_TransShape(Pinkey_PIP_trans, 18);
 	set_one_TransShape(Pinkey_DIP_trans, 19);
@@ -821,24 +783,24 @@ void HandModel::Updata_Scale_matrix(float* shapeParams)
 	Eigen::Vector3f wrist_scale(shapeParams[0], shapeParams[0], shapeParams[0]);
 	set_one_Scale(wrist_scale, 0);
 
-	// 6  --------- thumb_DIP_scale_x
-	Eigen::Vector3f thumb_DIP_scale(shapeParams[6], 1, 1);
+	// 3  --------- thumb_DIP_scale_x
+	Eigen::Vector3f thumb_DIP_scale(shapeParams[3], 1, 1);
 	set_one_Scale(thumb_DIP_scale, 3);
 
-	// 11 --------- Index_DIP_scale_x
-	Eigen::Vector3f Index_DIP_scale(shapeParams[11], 1, 1);
+	// 7 --------- Index_DIP_scale_x
+	Eigen::Vector3f Index_DIP_scale(shapeParams[7], 1, 1);
 	set_one_Scale(Index_DIP_scale, 7);
 
-	// 15  --------- Middle_DIP_scale_x
-	Eigen::Vector3f Middle_DIP_scale(shapeParams[15], 1, 1);
+	// 11  --------- Middle_DIP_scale_x
+	Eigen::Vector3f Middle_DIP_scale(shapeParams[11], 1, 1);
 	set_one_Scale(Middle_DIP_scale, 11);
 
-	// 20  --------- Ring_DIP_scale_x
-	Eigen::Vector3f Ring_DIP_scale(shapeParams[20], 1, 1);
+	// 15  --------- Ring_DIP_scale_x
+	Eigen::Vector3f Ring_DIP_scale(shapeParams[15], 1, 1);
 	set_one_Scale(Ring_DIP_scale, 15);
 
-	// 25  --------- Pinkey_DIP_scale_x
-	Eigen::Vector3f Pinkey_DIP_scale(shapeParams[25], 1, 1);
+	// 19  --------- Pinkey_DIP_scale_x
+	Eigen::Vector3f Pinkey_DIP_scale(shapeParams[19], 1, 1);
 	set_one_Scale(Pinkey_DIP_scale, 19);
 }
 
@@ -1573,4 +1535,30 @@ void HandModel::Print_fingerLength()
 	}
 
 	cout << endl;
+}
+
+void HandModel::Save()
+{
+	std::ofstream f;
+	f.open(".\\test\\Adjust_vertices.txt", std::ios::out);
+	f << this->NumofVertices << endl;
+	for (int i = 0; i < this->NumofVertices; i++) {
+		f << this->Vertices_update_(i, 0) << "  "
+			<< this->Vertices_update_(i, 1) << "  "
+			<< this->Vertices_update_(i, 2) << endl;
+	}
+	f.close();
+	printf("Save Adjust vertices succeed!!!\n");
+
+	std::ofstream f_2;
+	f_2.open(".\\test\\Adjust_joints.txt", std::ios::out);
+	f_2 << this->NumofJoints << endl;
+	for (int i = 0; i < this->NumofJoints; i++) {
+		f_2 << this->Joints[i].CorrespondingPosition(0) << ","
+			<< this->Joints[i].CorrespondingPosition(1) << ","
+			<< this->Joints[i].CorrespondingPosition(2) << ","
+			<<1<<endl;
+	}
+	f_2.close();
+	printf("Save Target Joints succeed!!!\n");
 }

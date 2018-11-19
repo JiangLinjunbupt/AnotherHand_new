@@ -577,52 +577,24 @@ namespace DS {
 				handmodel->Params[1] = worker->Downsample_pointcloud_center_y;
 				handmodel->Params[2] = worker->Downsample_pointcloud_center_z;
 
-				//测试不通过情况：
-				//handmodel->Params[6] = 60;
-				//handmodel->Params[7] = 90;
-				//handmodel->Params[8] = 10;
-				//handmodel->Params[9] = -20;
-
 				for (int i = 0; i < num_shape_thetas; i++)
 				{
 					handmodel->Shape_Params[i] = 0;
 				}
 
 
-				//handmodel->Params[10] = -90;
-				//handmodel->Params[12] = -90;
-				//handmodel->Params[13] = 0;
-
 				handmodel->Shape_Params[0] = 0.8f;
-				handmodel->Shape_Params[6] = 1.0f;
+				handmodel->Shape_Params[3] = 1.0f;
+				handmodel->Shape_Params[7] = 1.0f;
 				handmodel->Shape_Params[11] = 1.0f;
 				handmodel->Shape_Params[15] = 1.0f;
-				handmodel->Shape_Params[20] = 1.0f;
-				handmodel->Shape_Params[25] = 1.0f;
+				handmodel->Shape_Params[19] = 1.0f;
+
 				handmodel->Updata(handmodel->Params,handmodel->Shape_Params);
 			}
 
 			if (with_Kinect)
 			{
-
-				/*if (itr == 0)
-				{
-					worker->load_target_vertices();
-					handmodel->Shape_Params[0] = 1.5;
-				    handmodel->Shape_Params[1] = 10;
-					handmodel->Shape_Params[2] = 20;
-					handmodel->Shape_Params[3] = 30;
-					handmodel->Shape_Params[4] = -10;
-					handmodel->Shape_Params[5] = -5;
-					handmodel->Shape_Params[6] = 1.5;
-
-					handmodel->Shape_Params[7] = -10;
-					handmodel->Shape_Params[8] = 18;
-					handmodel->Shape_Params[9] = -12;
-					handmodel->Shape_Params[10] = 0;
-					handmodel->Shape_Params[11] = 2;
-					handmodel->Updata(handmodel->Params, handmodel->Shape_Params);
-				}*/
 				worker->track_till_convergence(with_glove, shapeTrack);
 				itr++;
 				//watch_result = true;

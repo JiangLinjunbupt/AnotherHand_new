@@ -1,0 +1,27 @@
+21
+Name : Wrist   Position : 0,0,0,1
+
+Name : ThumbLower   Position :-28.468,27.4715,-18.4322,1
+Name : ThumbMiddle   Position : -63.5129,52.0925,-35.8438,1
+Name : ThumbTop   Position : -80.7877,74.8383,-49.2702,1
+Name : ThumbSite   Position : -91.3441,96.1361,-62.7773,1
+
+Name : IndexLower   Position :  -25.5361,84.2559,-2.98504,1
+Name : IndexMiddle   Position : -30.5187,123.568,-5.80625,1
+Name : IndexTop   Position : -32.45,144.277,-14.0787,1
+Name : IndexSite   Position :  -33.5417,162.155,-22.184,1
+
+Name : MiddleLower   Position : -0.399423,84.5637,-2.46058,1
+Name : MiddleMiddle   Position :  0.735502,129.175,-5.76824,1
+Name : MiddleTop   Position : -1.19208,152.724,-17.399,1
+Name : MiddleSite   Position : -3.1667,171.001,-28.2518,1
+
+Name : RingLower   Position : 17.9766,75.7575,-5.24194,1
+Name : RingMiddle   Position : 25.3781,116.629,-9.22043,1
+Name : RingTop   Position : 25.3024,137.195,-24.547,1
+Name : RingSite   Position : 24.7268,153.522,-38.1339,1
+
+Name : PinkeyLower   Position :  33.4795,65.2179,-8.45142,1
+Name : PinkeyMiddle   Position : 44.1109,94.4087,-18.2167,1
+Name : PinkeyTop   Position : 47.1591,109.145,-28.3087,1
+Name : PinkeySite   Position : 48.8287,124.917,-39.9742,1

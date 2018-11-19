@@ -12,7 +12,7 @@ class HandModel
 public:
 	const int NumofJoints = 21;
 	const int NumberofParams = 26;
-	const int NumofShape_Params = 26;
+	const int NumofShape_Params = 20;
 public:
 	Camera * camera;
 	Joint* Joints;
@@ -84,4 +84,5 @@ public:
 
 	//ÏÔÊ¾²ÎÊı
 	void Print_fingerLength();
+	void Save();
 };

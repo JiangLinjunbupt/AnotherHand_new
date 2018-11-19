@@ -230,8 +230,6 @@ namespace energy
 			e(i * 3 + 2) = Target_joints(i, 2) - model->Joint_matrix(i, 2);
 		}
 
-		cout << "Index MCP difference is £º  " << e(5 * 3 + 0) << "   " << e(5 * 3 + 1) << "    " << e(5 * 3 + 2) << endl;
-
 		Eigen::MatrixXf Joints_jacobian = Eigen::MatrixXf::Zero(3 * NumofJoints, NumberofShapeParams);
 
 		for (int i = 0; i < NumofJoints; ++i)
@@ -283,7 +281,7 @@ namespace energy
 
 		int NumofCorrespond = static_cast<int>(Downsample_cloud.points.size());
 		Eigen::VectorXf e = Eigen::VectorXf::Zero(3 * NumofCorrespond, 1);
-		Eigen::MatrixXf jacobian_correspond = Eigen::MatrixXf::Zero(NumofCorrespond * 3, model->NumberofParams);
+		Eigen::MatrixXf jacobian_correspond = Eigen::MatrixXf::Zero(NumofCorrespond * 3, model->NumofShape_Params);
 
 		for (int i = 0; i < NumofCorrespond; i++)
 		{
@@ -299,15 +297,8 @@ namespace energy
 
 
 			int vert_idx = model->Visible_vertices_index[cloud_correspond[i]];
-			jacobian_correspond.block(i * 3, 0, 3, model->NumberofParams) = reweight*model->Compute_one_Vertice_Shape_Jacobian(vert_idx);
+			jacobian_correspond.block(i * 3, 0, 3, model->NumofShape_Params) = reweight*model->Compute_one_Vertice_Shape_Jacobian(vert_idx);
 		}
-
-
-		//for (int cor_id = 0; cor_id < NumofCorrespond; ++cor_id)
-		//{
-		//	int vert_idx = model->Visible_vertices_index[cloud_correspond[cor_id]];
-		//	jacobian_correspond.block(cor_id * 3, 0, 3, model->NumberofParams) = model->Compute_one_Vertice_Shape_Jacobian(vert_idx);
-		//}
 
 		float omiga = settings->fit3D_weight;
 		sys.Jt_J.noalias() += omiga*jacobian_correspond.transpose() * jacobian_correspond;

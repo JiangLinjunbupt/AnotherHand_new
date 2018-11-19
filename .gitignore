@@ -39,3 +39,6 @@ x64/*
 *.lastbuildstate
 *.tlog
 *.log
+*.pdb
+*.idb
+.vs/AnotherHandModel_newStructure/v14/.suo
