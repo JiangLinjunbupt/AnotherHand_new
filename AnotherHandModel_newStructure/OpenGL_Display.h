@@ -610,6 +610,18 @@ namespace DS {
 		//duration = double(End - Begin) / CLK_TCK;//duration就是运行函数所打的
 		//std::cout << "time is : " << duration * 1000 << std::endl;
 
+		handmodel->Generate_img();
+		cv::flip(handmodel->outputImage, handmodel->outputImage, 0);
+		cv::imshow("img", handmodel->outputImage);
+		cv::waitKey(10);
+
+		//vector<vector<cv::Point> > contours;
+		//cv::findContours(handmodel->outputImage, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE); //找轮廓
+		//cv::Mat hole(handmodel->outputImage.size(), CV_8U, cv::Scalar(0)); //遮罩图层
+		//cv::drawContours(hole, contours, -1, cv::Scalar(255), CV_FILLED); //在遮罩图层上，用白色像素填充轮廓，得到MASK
+		//cv::imshow("My hole", hole);
+		//cv::waitKey(10);
+
 		glutPostRedisplay();
 	}
 

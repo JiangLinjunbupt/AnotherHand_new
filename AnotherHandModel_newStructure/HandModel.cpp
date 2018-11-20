@@ -600,13 +600,14 @@ void HandModel::Init_HandModel()
 	this->Shape_ParamsUpperBound = new float[NumofShape_Params]();
 	this->Shape_ParamsLowerBound = new float[NumofShape_Params]();
 
-	this->Shape_Params[0] = 1.0f; 
+	this->Shape_Params[0] = 0.8f; 
 	this->Shape_Params[3] = 1.0f;
 	this->Shape_Params[7] =1.0f;
 	this->Shape_Params[11] = 1.0f;
 	this->Shape_Params[15] = 1.0f;
 	this->Shape_Params[19] = 1.0f;
 
+	outputImage = cv::Mat::zeros(424, 512, CV_8UC1);
 
 	this->set_local_coordinate();
 	this->set_parent_child_transform();
@@ -1034,16 +1035,23 @@ void HandModel::Updata_normal_And_visibel_vertices()
 	{
 		Vertices_normal.row(i).normalize();
 
+		Eigen::Vector3f visible_v(Vertices_update_(i, 0), Vertices_update_(i, 1), Vertices_update_(i, 2));
+		Eigen::Vector2i visible_2D;
+		visible_2D << (int)(camera->world_to_depth_image(visible_v)(0)), (int)(camera->world_to_depth_image(visible_v)(1));
+
+		Visible_vertices_2D.push_back(visible_2D);
+
+
 		if ((Vertices_normal(i, 2)) < 0)
 		{
 			Eigen::Vector3f visible_v(Vertices_update_(i, 0), Vertices_update_(i, 1), Vertices_update_(i, 2));
 			Visible_vertices.push_back(visible_v);
 			Visible_vertices_index.push_back(i);
 
-			Eigen::Vector2i visible_2D;
+			/*Eigen::Vector2i visible_2D;
 			visible_2D << (int)(camera->world_to_depth_image(visible_v)(0)), (int)(camera->world_to_depth_image(visible_v)(1));
 
-			Visible_vertices_2D.push_back(visible_2D);
+			Visible_vertices_2D.push_back(visible_2D);*/
 		}
 	}
 
@@ -1610,4 +1618,27 @@ void HandModel::Save()
 	}
 	f_2.close();
 	printf("Save Target Joints succeed!!!\n");
+}
+
+void HandModel::Generate_img()
+{
+	outputImage.setTo(0);
+	uchar * pointer = outputImage.data;
+	//cout << "size" << Visible_vertices_2D.size() << endl;
+	for (int i = 0; i < Visible_vertices_2D.size(); i++)
+	{
+		if((Visible_vertices_2D[i](0)>=0) && 
+			(Visible_vertices_2D[i](0) <=512-1) && 
+			(Visible_vertices_2D[i](1) >= 0)&& 
+			(Visible_vertices_2D[i](1) <=424-1) )
+
+			pointer[Visible_vertices_2D[i](1)*512 + Visible_vertices_2D[i](0)] = 255;
+	}
+
+	vector<vector<cv::Point> > contours;
+	cv::findContours(outputImage, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE); //ÕÒÂÖÀª
+	//outputImage.setTo(0);
+	cv::drawContours(outputImage, contours, -1, cv::Scalar(255), CV_FILLED); //ÔÚÕÚÕÖÍ¼²ãÉÏ£¬ÓÃ°×É«ÏñËØÌî³äÂÖÀª£¬µÃµ½MASK
+	
+	cout<<cv::countNonZero(outputImage)<<endl;
 }

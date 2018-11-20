@@ -1,11 +1,11 @@
 #pragma once
-#include"HandModel.h"
 #include"Energy_Fitting.h"
 #include"Energy_Limited.h"
 #include"Energy_Collision.h"
 #include"Energy_Temporal.h"
 #include"Energy_Damping.h"
 #include"TrackingMonitor.h"
+#include"HandModel.h"
 
 class Worker {
 
@@ -52,7 +52,7 @@ public:
 		delete model;
 		delete idx_img;
 	}
-	void fetch_Input(string fileName);
+	void fetch_Input(string fileName, string fileName2);
 	void track(int iter, bool with_glove);
 	void track_shape(int iter, bool with_glove);
 	bool track_till_convergence(bool with_glove, bool shapeTracking);

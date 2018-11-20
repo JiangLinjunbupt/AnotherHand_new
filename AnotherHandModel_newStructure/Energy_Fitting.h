@@ -1,7 +1,7 @@
 #pragma once
+#include <pcl/kdtree/kdtree_flann.h>      //pcl库的flann 和 opencv的flann的库有冲突，解决方法：https://blog.csdn.net/u011418173/article/details/52614617
 #include"Energy.h"
 #include"HandModel.h"
-#include <pcl/kdtree/kdtree_flann.h>
 
 namespace energy {
 	class Energy_Fitting : public Energy {

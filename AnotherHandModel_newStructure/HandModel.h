@@ -6,6 +6,9 @@
 #include<string>
 #include<ctime>
 #include"Camera.h"
+#include "opencv2/core/core.hpp"    
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/highgui/highgui.hpp"
 
 class HandModel
 {
@@ -44,6 +47,7 @@ public:
 	Vector4 GlobalPosition;
 	Vector4 HandPalmCenter;
 
+	cv::Mat outputImage;
 
 	HandModel(Camera * camera_);
 	~HandModel() { delete ParamsLowerBound; delete ParamsUpperBound; delete Params; delete Joints; }
@@ -88,4 +92,5 @@ public:
 	//œ‘ æ≤Œ ˝
 	void Print_fingerLength();
 	void Save();
+	void Generate_img();
 };

@@ -1,6 +1,5 @@
 #include"OpenGL_Display.h"
 #include <tchar.h>
-
 //共享内存的相关定义
 HANDLE hMapFile;
 LPCTSTR pBuf;
@@ -49,7 +48,9 @@ int main(int argc,char** argv)
 	Worker *worker = new Worker(model);
 	worker->load_target_joints();
 	worker->load_target_vertices();
-	worker->fetch_Input(".\\test\\dwonSamplePoint_1.txt");
+	worker->fetch_Input(".\\test\\dwonSamplePoint_0.txt", ".\\test\\idx_img_0.txt");
+
+
 	DS::handmodel = model;
 	DS::worker = worker;
 

@@ -152,7 +152,7 @@ void Worker::load_target_vertices()
 	f.close();
 	printf("Load Target vertices succeed!!!\n");
 }
-void Worker::fetch_Input(string fileName)
+void Worker::fetch_Input(string fileName, string fileName2)
 {
 	//从文件中读取下采样后的深度值和距离变换后的idx_img
 	std::ifstream f;
@@ -175,4 +175,17 @@ void Worker::fetch_Input(string fileName)
 	Downsample_pointcloud_center_x = -Downsample_pointcloud_center_x;
 	Downsample_pointcloud_center_z = -Downsample_pointcloud_center_z;
 	printf("Load Target DownSamplePoint succeed!!!\n");
+
+
+	std::ifstream f2;
+	f2.open(fileName2, std::ios::in);
+	for (int i = 0; i < 424*512; ++i) {
+		int t;
+		f2 >> t;
+		if (t == i) idx_img[i] = 255;
+		else idx_img[i] = 0;
+	}
+	f2.close();
+	printf("Load Target idx succeed!!!\n");
+
 }
