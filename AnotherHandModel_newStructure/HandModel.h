@@ -33,10 +33,13 @@ public:
 	int NumofFaces;
 
 	float *Params;
-	float *Shape_Params;
 	float *init_Params;         //代表手套给的初始关节角度
 	float* ParamsUpperBound;
 	float* ParamsLowerBound;
+
+	float *Shape_Params;
+	float* Shape_ParamsUpperBound;
+	float* Shape_ParamsLowerBound;
 
 	Vector4 GlobalPosition;
 	Vector4 HandPalmCenter;

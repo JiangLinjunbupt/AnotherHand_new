@@ -583,12 +583,17 @@ namespace DS {
 				}
 
 
-				handmodel->Shape_Params[0] = 0.8f;
+				handmodel->Shape_Params[0] = 0.7f;
 				handmodel->Shape_Params[3] = 1.0f;
 				handmodel->Shape_Params[7] = 1.0f;
 				handmodel->Shape_Params[11] = 1.0f;
 				handmodel->Shape_Params[15] = 1.0f;
 				handmodel->Shape_Params[19] = 1.0f;
+
+				//handmodel->Shape_Params[4] = -10.0f;
+				//handmodel->Shape_Params[8] = -11.0f;
+				//handmodel->Shape_Params[12] = -11.0f;
+				//handmodel->Shape_Params[16] = -11.0f;
 
 				handmodel->Updata(handmodel->Params,handmodel->Shape_Params);
 			}

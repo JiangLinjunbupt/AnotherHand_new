@@ -3,7 +3,7 @@
 Worker::Worker(HandModel * input_model) {
 	this->model = input_model;
 	E_fitting.init(input_model);
-	//E_limits.init(input_model);
+	E_limits.init(input_model);
 	//E_collision.init(input_model);
 	//E_temporal.init(input_model);
 
@@ -68,7 +68,7 @@ void Worker::track_shape(int iter, bool with_glove)
 	//E_fitting.track_Shape_Joints(system, Target_joints, rigid_only, eval_error, tracking_error.error_3D, tracking_error.error_2D, iter);
 	//E_collision.track(system);
 	//E_temporal.track(system);
-	//E_limits.track(system, with_glove);
+	E_limits.track_shape(system);
 	E_damping.track_shape(system);
 	/*if (rigid_only)
 	energy::Energy::rigid_only(system);*/

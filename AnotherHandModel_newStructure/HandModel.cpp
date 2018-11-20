@@ -107,43 +107,90 @@ void HandModel::set_parent_child_transform()
 }
 void HandModel::set_params_bound()  
 {
-	//wrist
-	ParamsUpperBound[0] = 1.0e+10f;	ParamsLowerBound[0] = -1.0e+10f;
-	ParamsUpperBound[1] = 1.0e+10f;	ParamsLowerBound[1] = -1.0e+10f;
-	ParamsUpperBound[2] = 1.0e+10f;	ParamsLowerBound[2] = -1.0e+10f;
-	ParamsUpperBound[3] = 1.0e+10f;	ParamsLowerBound[3] = -1.0e+10f;
-	ParamsUpperBound[4] = 1.0e+10f;	ParamsLowerBound[4] = -1.0e+10f;
-	ParamsUpperBound[5] = 1.0e+10f;	ParamsLowerBound[5] = -1.0e+10f;
+	//pose params bounds
+	{
+		//wrist
+		ParamsUpperBound[0] = 1.0e+10f;	ParamsLowerBound[0] = -1.0e+10f;
+		ParamsUpperBound[1] = 1.0e+10f;	ParamsLowerBound[1] = -1.0e+10f;
+		ParamsUpperBound[2] = 1.0e+10f;	ParamsLowerBound[2] = -1.0e+10f;
+		ParamsUpperBound[3] = 1.0e+10f;	ParamsLowerBound[3] = -1.0e+10f;
+		ParamsUpperBound[4] = 1.0e+10f;	ParamsLowerBound[4] = -1.0e+10f;
+		ParamsUpperBound[5] = 1.0e+10f;	ParamsLowerBound[5] = -1.0e+10f;
 
-	//thumb
-	ParamsUpperBound[6] = 10.0f;   ParamsLowerBound[6] = -60.0f;
-	ParamsUpperBound[7] = 90.0f;   ParamsLowerBound[7] = -10.0f;
-	ParamsUpperBound[8] = 50.0f;   ParamsLowerBound[8] = -10.0f;
-	ParamsUpperBound[9] = 90.0f;   ParamsLowerBound[9] = -10.0f;
+		//thumb
+		ParamsUpperBound[6] = 10.0f;   ParamsLowerBound[6] = -60.0f;
+		ParamsUpperBound[7] = 90.0f;   ParamsLowerBound[7] = -10.0f;
+		ParamsUpperBound[8] = 50.0f;   ParamsLowerBound[8] = -10.0f;
+		ParamsUpperBound[9] = 90.0f;   ParamsLowerBound[9] = -10.0f;
 
-	//index
-	ParamsUpperBound[10] = 10.0f;  ParamsLowerBound[10] = -90.0f;
-	ParamsUpperBound[11] = 20.0f;  ParamsLowerBound[11] = -30.0f;  //--正的向中指靠，负的向拇指靠
-	ParamsUpperBound[12] = 10.0f;  ParamsLowerBound[12] = -90.0f;
-	ParamsUpperBound[13] = 10.0f;  ParamsLowerBound[13] = -90.0f;
+		//index
+		ParamsUpperBound[10] = 10.0f;  ParamsLowerBound[10] = -90.0f;
+		ParamsUpperBound[11] = 20.0f;  ParamsLowerBound[11] = -30.0f;  //--正的向中指靠，负的向拇指靠
+		ParamsUpperBound[12] = 10.0f;  ParamsLowerBound[12] = -90.0f;
+		ParamsUpperBound[13] = 10.0f;  ParamsLowerBound[13] = -90.0f;
 
-	//middle
-	ParamsUpperBound[14] = 10.0f;  ParamsLowerBound[14] = -90.0f;
-	ParamsUpperBound[15] = 20.0;   ParamsLowerBound[15] = -10.0f; //--正的向无名指靠，负的向食指靠
-	ParamsUpperBound[16] = 10.0f;  ParamsLowerBound[16] = -90.0f;
-	ParamsUpperBound[17] = 10.0f;  ParamsLowerBound[17] = -90.0f;
+		//middle
+		ParamsUpperBound[14] = 10.0f;  ParamsLowerBound[14] = -90.0f;
+		ParamsUpperBound[15] = 20.0;   ParamsLowerBound[15] = -10.0f; //--正的向无名指靠，负的向食指靠
+		ParamsUpperBound[16] = 10.0f;  ParamsLowerBound[16] = -90.0f;
+		ParamsUpperBound[17] = 10.0f;  ParamsLowerBound[17] = -90.0f;
 
-	//ring
-	ParamsUpperBound[18] = 10.0;  ParamsLowerBound[18] = -90.0f;
-	ParamsUpperBound[19] = 20.0f;  ParamsLowerBound[19] = -15.0f;
-	ParamsUpperBound[20] = 10.0f;  ParamsLowerBound[20] = -90.0f;
-	ParamsUpperBound[21] = 10.0f;  ParamsLowerBound[21] = -90.0f;
+		//ring
+		ParamsUpperBound[18] = 10.0;  ParamsLowerBound[18] = -90.0f;
+		ParamsUpperBound[19] = 20.0f;  ParamsLowerBound[19] = -15.0f;
+		ParamsUpperBound[20] = 10.0f;  ParamsLowerBound[20] = -90.0f;
+		ParamsUpperBound[21] = 10.0f;  ParamsLowerBound[21] = -90.0f;
 
-	//pinkey
-	ParamsUpperBound[22] = 10.0f;  ParamsLowerBound[22] = -90.0f;
-	ParamsUpperBound[23] = 20.0f;  ParamsLowerBound[23] = -15.0f;
-	ParamsUpperBound[24] = 10.0f;  ParamsLowerBound[24] = -90.0f;
-	ParamsUpperBound[25] = 10.0f;  ParamsLowerBound[25] = -90.0f;
+		//pinkey
+		ParamsUpperBound[22] = 10.0f;  ParamsLowerBound[22] = -90.0f;
+		ParamsUpperBound[23] = 20.0f;  ParamsLowerBound[23] = -15.0f;
+		ParamsUpperBound[24] = 10.0f;  ParamsLowerBound[24] = -90.0f;
+		ParamsUpperBound[25] = 10.0f;  ParamsLowerBound[25] = -90.0f;
+	}
+
+	//shape params bounds
+	{
+		// 0  --------- 整体的scale   拉长或者缩短
+		this->Shape_ParamsUpperBound[0] = 1.5f; this->Shape_ParamsLowerBound[0] = 0.5f;
+		// 1  --------- thumb_PIP_trans_x             
+		// 2  --------- thumb_DPI_trans_x           
+		// 3  --------- thumb_DPI_scale_x
+		this->Shape_ParamsUpperBound[1] = 3.94f; this->Shape_ParamsLowerBound[1] = -3.94f;
+		this->Shape_ParamsUpperBound[2] = 3.31f; this->Shape_ParamsLowerBound[2] = -3.31f;
+		this->Shape_ParamsUpperBound[3] = 1.059f; this->Shape_ParamsLowerBound[3] = 0.941f;
+		// 4  --------- Index_MCP_trans_x
+		// 5 --------- Index_PIP_trans_x
+		// 6 --------- Index_DIP_trans_x
+		// 7 --------- Index_DIP_scale_x
+		this->Shape_ParamsUpperBound[4] = 6.27f; this->Shape_ParamsLowerBound[4] = -6.27f;
+		this->Shape_ParamsUpperBound[5] = 4.94f; this->Shape_ParamsLowerBound[5] = -4.94f;
+		this->Shape_ParamsUpperBound[6] = 2.51f; this->Shape_ParamsLowerBound[6] = 2.51f;
+		this->Shape_ParamsUpperBound[7] = 1.115f; this->Shape_ParamsLowerBound[7] = 0.885f;
+		// 8  --------- Middle_MCP_trans_x
+		// 9  --------- Middle_PIP_trans_x
+		// 10  --------- Middle_DIP_trans_x
+		// 11  --------- Middle_DIP_scale_x 
+		this->Shape_ParamsUpperBound[8] = 5.38f; this->Shape_ParamsLowerBound[8] = -5.38f;
+		this->Shape_ParamsUpperBound[9] = 3.81f; this->Shape_ParamsLowerBound[9] = -3.81f;
+		this->Shape_ParamsUpperBound[10] = 3.00f; this->Shape_ParamsLowerBound[10] = -3.00f;
+		this->Shape_ParamsUpperBound[11] = 1.087f; this->Shape_ParamsLowerBound[11] = 0.913f;
+		// 12  --------- Ring_MCP_trans_x
+		// 13  --------- Ring_PIP_trans_x
+		// 14  --------- Ring_DIP_trans_x
+		// 15  --------- Ring_DIP_scale_x
+		this->Shape_ParamsUpperBound[12] = 5.06f; this->Shape_ParamsLowerBound[12] = -5.06f;
+		this->Shape_ParamsUpperBound[13] = 3.87f; this->Shape_ParamsLowerBound[13] = -3.87f;
+		this->Shape_ParamsUpperBound[14] = 3.29f; this->Shape_ParamsLowerBound[14] = -3.29f;
+		this->Shape_ParamsUpperBound[15] = 1.104f; this->Shape_ParamsLowerBound[15] = 0.896f;
+		// 16  --------- Pinkey_MCP_trans_x
+		// 17  --------- Pinkey_PIP_trans_x
+		// 18  --------- Pinkey_DIP_trans_x
+		// 19  --------- Pinkey_DIP_scale_x
+		this->Shape_ParamsUpperBound[16] = 4.36f; this->Shape_ParamsLowerBound[16] = -4.36f;
+		this->Shape_ParamsUpperBound[17] = 2.77f; this->Shape_ParamsLowerBound[17] = -2.77f;
+		this->Shape_ParamsUpperBound[18] = 2.54f; this->Shape_ParamsLowerBound[18] = -2.54f;
+		this->Shape_ParamsUpperBound[19] = 1.124f; this->Shape_ParamsLowerBound[19] = 0.876f;
+	}
 
 }
 void HandModel::Init_HandModel()
@@ -442,7 +489,7 @@ void HandModel::Init_HandModel()
 			}
 		}
 
-		//Pinkey
+		//Pinky
 		{
 
 			{
@@ -539,17 +586,19 @@ void HandModel::Init_HandModel()
 	// 14  --------- Ring_DIP_trans_x
 	// 15  --------- Ring_DIP_scale_x
 
-	// 16  --------- Pinkey_MCP_trans_x
-	// 17  --------- Pinkey_PIP_trans_x
-	// 18  --------- Pinkey_DIP_trans_x
-	// 19  --------- Pinkey_DIP_scale_x
+	// 16  --------- Pinky_MCP_trans_x
+	// 17  --------- Pinky_PIP_trans_x
+	// 18  --------- Pinky_DIP_trans_x
+	// 19  --------- Pinky_DIP_scale_x
 
 	this->Params = new float[NumberofParams]();
-	this->Shape_Params = new float[NumofShape_Params]();
 	this->init_Params = new float[NumberofParams]();
 	this->ParamsUpperBound = new float[NumberofParams]();
 	this->ParamsLowerBound = new float[NumberofParams]();
 
+	this->Shape_Params = new float[NumofShape_Params]();
+	this->Shape_ParamsUpperBound = new float[NumofShape_Params]();
+	this->Shape_ParamsLowerBound = new float[NumofShape_Params]();
 
 	this->Shape_Params[0] = 1.0f; 
 	this->Shape_Params[3] = 1.0f;
