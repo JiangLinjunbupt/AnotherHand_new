@@ -10,7 +10,7 @@ namespace energy
 	void Energy_Limited::shape_boundLimited(LinearSystem& sys)
 	{
 		Eigen::Matrix<float, num_shape_thetas, num_shape_thetas> J_limit = Eigen::Matrix<float, num_shape_thetas, num_shape_thetas>::Zero(num_shape_thetas, num_shape_thetas);
-		Eigen::Matrix<float, num_shape_thetas, 1> e_limit = Eigen::Matrix<float, num_shape_thetas, 1>::Zero(num_shape_thetas, num_shape_thetas);
+		Eigen::Matrix<float, num_shape_thetas, 1> e_limit = Eigen::Matrix<float, num_shape_thetas, 1>::Zero(num_shape_thetas, 1);
 
 		for (int i = 0; i < num_shape_thetas; ++i)
 		{
@@ -40,7 +40,7 @@ namespace energy
 		}
 
 		///--- Add constraints to the solve
-		float omega = 10;
+		float omega = 100;
 		sys.Jt_J.noalias() += omega * J_limit.transpose() * J_limit;
 		sys.Jt_e.noalias() += omega * J_limit.transpose() * e_limit;
 
@@ -51,15 +51,16 @@ namespace energy
 
 	void Energy_Limited::shape_relativeLimited(LinearSystem& sys)
 	{
-		Eigen::Matrix<float, num_thetas, num_thetas> J_limit = Eigen::Matrix<float, num_thetas, num_thetas>::Zero(num_thetas, num_thetas);
-		Eigen::Matrix<float, num_thetas, 1>  e_limit = Eigen::Matrix<float, num_thetas, 1>::Zero(num_thetas, 1);
+
+		Eigen::Matrix<float, num_shape_thetas, num_shape_thetas> J_limit = Eigen::Matrix<float, num_shape_thetas, num_shape_thetas>::Zero(num_shape_thetas, num_shape_thetas);
+		Eigen::Matrix<float, num_shape_thetas, 1>  e_limit = Eigen::Matrix<float, num_shape_thetas, 1>::Zero(num_shape_thetas, 1);
 
 		//thumb
 		{
 			float Length_m, Length_pp, Length_pd;
 			Length_m = (model->Joint_matrix.row(2) - model->Joint_matrix.row(1)).norm();
 			Length_pp = (model->Joint_matrix.row(3) - model->Joint_matrix.row(2)).norm();
-			Length_pd = (model->Joint_matrix.row(4) - model->Joint_matrix.row(3)).norm() - 5.67f;
+			Length_pd = (model->Joint_matrix.row(4) - model->Joint_matrix.row(3)).norm() - 5.67f*model->Shape_Params[0];
 
 			if (Length_m > 1.76f*Length_pp)
 			{
@@ -98,10 +99,10 @@ namespace energy
 		//index
 		{
 			float Length_m, Length_pp, Length_pm,Length_pd;
-			Length_m = (model->Joint_matrix.row(5) - model->Joint_matrix.row(0)).norm() - 20.0f;
+			Length_m = (model->Joint_matrix.row(5) - model->Joint_matrix.row(0)).norm() - 20.0f*model->Shape_Params[0];
 			Length_pp = (model->Joint_matrix.row(6) - model->Joint_matrix.row(5)).norm();
 			Length_pm = (model->Joint_matrix.row(7) - model->Joint_matrix.row(6)).norm();
-			Length_pd = (model->Joint_matrix.row(8) - model->Joint_matrix.row(7)).norm() - 3.84f;
+			Length_pd = (model->Joint_matrix.row(8) - model->Joint_matrix.row(7)).norm() - 3.84f*model->Shape_Params[0];
 
 			if (Length_m > 2.14f*Length_pp)
 			{
@@ -155,10 +156,10 @@ namespace energy
 		//middle
 		{
 			float Length_m, Length_pp, Length_pm, Length_pd;
-			Length_m = (model->Joint_matrix.row(9) - model->Joint_matrix.row(0)).norm() - 20.0f;
+			Length_m = (model->Joint_matrix.row(9) - model->Joint_matrix.row(0)).norm() - 20.0f*model->Shape_Params[0];
 			Length_pp = (model->Joint_matrix.row(10) - model->Joint_matrix.row(9)).norm();
 			Length_pm = (model->Joint_matrix.row(11) - model->Joint_matrix.row(10)).norm();
-			Length_pd = (model->Joint_matrix.row(12) - model->Joint_matrix.row(11)).norm() - 3.95f;
+			Length_pd = (model->Joint_matrix.row(12) - model->Joint_matrix.row(11)).norm() - 3.95f*model->Shape_Params[0];
 
 			if (Length_m > 1.71f*Length_pp)
 			{
@@ -212,10 +213,10 @@ namespace energy
 		//ring
 		{
 			float Length_m, Length_pp, Length_pm, Length_pd;
-			Length_m = (model->Joint_matrix.row(13) - model->Joint_matrix.row(0)).norm() - 20.0f;
+			Length_m = (model->Joint_matrix.row(13) - model->Joint_matrix.row(0)).norm() - 20.0f*model->Shape_Params[0];
 			Length_pp = (model->Joint_matrix.row(14) - model->Joint_matrix.row(13)).norm();
 			Length_pm = (model->Joint_matrix.row(15) - model->Joint_matrix.row(14)).norm();
-			Length_pd = (model->Joint_matrix.row(16) - model->Joint_matrix.row(15)).norm() - 3.95f;
+			Length_pd = (model->Joint_matrix.row(16) - model->Joint_matrix.row(15)).norm() - 3.95f*model->Shape_Params[0];
 
 			if (Length_m > 1.68f*Length_pp)
 			{
@@ -269,10 +270,10 @@ namespace energy
 		//pinky
 		{
 			float Length_m, Length_pp, Length_pm, Length_pd;
-			Length_m = (model->Joint_matrix.row(17) - model->Joint_matrix.row(0)).norm() - 20.0f;
+			Length_m = (model->Joint_matrix.row(17) - model->Joint_matrix.row(0)).norm() - 20.0f*model->Shape_Params[0];
 			Length_pp = (model->Joint_matrix.row(18) - model->Joint_matrix.row(17)).norm();
 			Length_pm = (model->Joint_matrix.row(19) - model->Joint_matrix.row(18)).norm();
-			Length_pd = (model->Joint_matrix.row(20) - model->Joint_matrix.row(19)).norm() - 3.73f;
+			Length_pd = (model->Joint_matrix.row(20) - model->Joint_matrix.row(19)).norm() - 3.73f*model->Shape_Params[0];
 
 			if (Length_m > 1.93f*Length_pp)
 			{
@@ -333,7 +334,6 @@ namespace energy
 		if (Energy::safety_check)
 			Energy::has_nan(sys);
 	}
-
 
 	void Energy_Limited::track(LinearSystem& sys, bool with_glove)
 	{

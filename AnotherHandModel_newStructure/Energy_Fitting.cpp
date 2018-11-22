@@ -90,7 +90,6 @@ namespace energy
 		}
 	}
 
-
 	void Energy_Fitting::track_3D(LinearSystem &sys, pcl::PointCloud<pcl::PointXYZ>& Downsample_cloud)
 	{
 		load_handmodel_visible_cloud();
@@ -106,7 +105,8 @@ namespace energy
 				+ (Downsample_cloud.points[i].y - model->Visible_vertices[cloud_correspond[i]].y())*(Downsample_cloud.points[i].y - model->Visible_vertices[cloud_correspond[i]].y())
 				+ (Downsample_cloud.points[i].z - model->Visible_vertices[cloud_correspond[i]].z())*(Downsample_cloud.points[i].z - model->Visible_vertices[cloud_correspond[i]].z()));
 
-			float reweight = 1.0f / sqrt(length + 1e-3);
+			//float reweight = 1.0f / sqrt(length + 1e-3);
+			float reweight = 1.0f;
 
 			e(i * 3 + 0) = reweight*(Downsample_cloud.points[i].x - model->Visible_vertices[cloud_correspond[i]].x());
 			e(i * 3 + 1) = reweight*(Downsample_cloud.points[i].y - model->Visible_vertices[cloud_correspond[i]].y());
@@ -117,12 +117,6 @@ namespace energy
 			jacobian_correspond.block(i * 3, 0, 3, model->NumberofParams) = reweight*model->Compute_one_Vertice_Jacobian(vert_idx);
 		}
 
-
-		//for (int cor_id = 0; cor_id < NumofCorrespond; ++cor_id)
-		//{
-		//	int vert_idx = model->Visible_vertices_index[cloud_correspond[cor_id]];
-		//	jacobian_correspond.block(cor_id * 3, 0, 3, model->NumberofParams) = model->Compute_one_Vertice_Jacobian(vert_idx);
-		//}
 
 		float omiga = settings->fit3D_weight;
 		sys.Jt_J.noalias() += omiga*jacobian_correspond.transpose() * jacobian_correspond;
@@ -135,7 +129,7 @@ namespace energy
 
 	void Energy_Fitting::track_2D(LinearSystem &sys, int *idx_img)
 	{
-		vector<pair<Eigen::Matrix<float, 2, 26>, Eigen::Vector2f>> outside_silhouette;
+		vector<pair<Eigen::Matrix<float, 2, num_thetas>, Eigen::Vector2f>> outside_silhouette;
 
 		for (int i = 0; i < model->Visible_vertices_2D.size(); i++)
 		{
@@ -167,7 +161,7 @@ namespace energy
 
 					//再算J
 					Matrix_2x3 J_perspective = model->camera->projection_jacobian(pixel_3D_position);
-					Eigen::Matrix<float, 2, 26> J_2D = Eigen::MatrixXf::Zero(2, 26);    //J_2D = J_perspective * J_3D
+					Eigen::Matrix<float, 2, num_thetas> J_2D = Eigen::MatrixXf::Zero(2, num_thetas);    //J_2D = J_perspective * J_3D
 
 					J_2D = J_perspective*model->Compute_one_Vertice_Jacobian(vert_idx);
 
@@ -182,7 +176,7 @@ namespace energy
 
 		if (size > 0)
 		{
-			Eigen::MatrixXf J_sil = Eigen::MatrixXf::Zero(2 * size, 26);
+			Eigen::MatrixXf J_sil = Eigen::MatrixXf::Zero(2 * size, num_thetas);
 
 			Eigen::VectorXf e_sil = Eigen::VectorXf::Zero(2 * size, 1);
 
@@ -205,10 +199,88 @@ namespace energy
 		}
 	}
 
-	void Energy_Fitting::track(LinearSystem &sys, pcl::PointCloud<pcl::PointXYZ>& Downsample_cloud, int *idx_img)
+	void Energy_Fitting::track_2D_using_Silhouette(LinearSystem &sys, int *idx_img)
 	{
-		if(settings->fit3D_enable) this->track_3D(sys, Downsample_cloud);
-		if(settings->fit2D_enable) this->track_2D(sys, idx_img);
+		vector<pair<Eigen::Matrix<float, 2, num_thetas>, Eigen::Vector2f>> outside_silhouette;
+
+		for (int i = 0; i < model->Visible_Silhouette_2D.size(); i++)
+		{
+			int vert_idx = model->Visible_Silhouette_index[i];
+			Eigen::Vector3f pixel_3D_position(model->Vertices_update_(vert_idx, 0), model->Vertices_update_(vert_idx, 1), model->Vertices_update_(vert_idx, 2));
+			Eigen::Vector2i pixel_2D_position(model->Visible_Silhouette_2D[i]);
+
+			if ((pixel_2D_position(0) >= 0) &&
+				(pixel_2D_position(0) <= 512 - 1) &&
+				(pixel_2D_position(1) >= 0) &&
+				(pixel_2D_position(1) <= 424 - 1))
+			{
+				Eigen::Vector2i pixel_2D_closest;
+				pixel_2D_closest << idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] % 512, idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] / 512;
+
+				float closest_distance = (pixel_2D_closest(0) - pixel_2D_position(0))* (pixel_2D_closest(0) - pixel_2D_position(0)) + (pixel_2D_closest(1) - pixel_2D_position(1))*(pixel_2D_closest(1) - pixel_2D_position(1));
+
+				if (closest_distance > 1)
+				{
+					//计算J和e
+					pair<Eigen::Matrix2Xf, Eigen::Vector2f> J_and_e;
+
+					//先算e
+					Eigen::Vector2f e;
+					e(0) = (float)pixel_2D_closest(0) - (float)pixel_2D_position(0);
+					e(1) = (float)pixel_2D_closest(1) - (float)pixel_2D_position(1);
+
+					J_and_e.second = e;
+
+					//再算J
+					Matrix_2x3 J_perspective = model->camera->projection_jacobian(pixel_3D_position);
+					Eigen::Matrix<float, 2, num_thetas> J_2D = Eigen::MatrixXf::Zero(2, num_thetas);    //J_2D = J_perspective * J_3D
+
+					J_2D = J_perspective*model->Compute_one_Vertice_Jacobian(vert_idx);
+
+					J_and_e.first = J_2D;
+
+					outside_silhouette.push_back(J_and_e);
+				}
+			}
+		}
+
+		int size = static_cast<int>(outside_silhouette.size());
+
+		if (size > 0)
+		{
+			Eigen::MatrixXf J_sil = Eigen::MatrixXf::Zero(2 * size, num_thetas);
+
+			Eigen::VectorXf e_sil = Eigen::VectorXf::Zero(2 * size, 1);
+
+			for (int i = 0; i < size; i++)
+			{
+				J_sil.row(i * 2 + 0) = outside_silhouette[i].first.row(0);
+				J_sil.row(i * 2 + 1) = outside_silhouette[i].first.row(1);
+
+				e_sil.row(i * 2 + 0) = outside_silhouette[i].second.row(0);
+				e_sil.row(i * 2 + 1) = outside_silhouette[i].second.row(1);
+			}
+
+			float omiga = settings->fit2D_weight;
+			sys.Jt_J.noalias() += omiga*J_sil.transpose() * J_sil;
+			sys.Jt_e.noalias() += omiga*J_sil.transpose() * e_sil;
+
+			///--- Check
+			if (Energy::safety_check)
+				Energy::has_nan(sys);
+		}
+	}
+
+	void Energy_Fitting::track(LinearSystem &sys, InputDataForTrack& inputdata)
+	{
+		if(settings->fit3D_enable) this->track_3D(sys, inputdata.pointcloud_downsample);
+		if(settings->fit2D_enable) this->track_2D(sys, inputdata.idxs_img);
+		//if (settings->fit2D_enable)
+		//{
+		//	this->track_2D_using_Silhouette(sys, inputdata.idxs_img);
+		//	//this->track_2D_using_Silhouette(sys, inputdata.inv_idxs_img);
+		//}
+
 	}
 
 	void Energy_Fitting::track_Shape_Joints(LinearSystem &sys,
@@ -274,7 +346,8 @@ namespace energy
 			Energy::has_nan(sys);
 	}
 
-	void Energy_Fitting::track_Shape_2(LinearSystem &sys, pcl::PointCloud<pcl::PointXYZ>& Downsample_cloud)
+
+	void Energy_Fitting::track_Shape_2_3D(LinearSystem &sys, pcl::PointCloud<pcl::PointXYZ>& Downsample_cloud)
 	{
 		load_handmodel_visible_cloud();
 		find_correspondences(Downsample_cloud);
@@ -289,7 +362,8 @@ namespace energy
 				+ (Downsample_cloud.points[i].y - model->Visible_vertices[cloud_correspond[i]].y())*(Downsample_cloud.points[i].y - model->Visible_vertices[cloud_correspond[i]].y())
 				+ (Downsample_cloud.points[i].z - model->Visible_vertices[cloud_correspond[i]].z())*(Downsample_cloud.points[i].z - model->Visible_vertices[cloud_correspond[i]].z()));
 
-			float reweight = 1.0f / sqrt(length + 1e-3);
+			//float reweight = 1.0f / sqrt(length + 1e-3);
+			float reweight = 1.0f;
 
 			e(i * 3 + 0) = reweight*(Downsample_cloud.points[i].x - model->Visible_vertices[cloud_correspond[i]].x());
 			e(i * 3 + 1) = reweight*(Downsample_cloud.points[i].y - model->Visible_vertices[cloud_correspond[i]].y());
@@ -307,5 +381,156 @@ namespace energy
 		///--- Check
 		if (Energy::safety_check)
 			Energy::has_nan(sys);
+	}
+	void Energy_Fitting::track_Shape_2_2D(LinearSystem &sys,int *idx_img)
+	{
+		vector<pair<Eigen::Matrix<float, 2, num_shape_thetas>, Eigen::Vector2f>> outside_silhouette;
+
+		for (int i = 0; i < model->Visible_vertices_2D.size(); i++)
+		{
+			Eigen::Vector3f pixel_3D_position(model->Visible_vertices[i]);
+			int vert_idx = model->Visible_vertices_index[i];
+			Eigen::Vector2i pixel_2D_position(model->Visible_vertices_2D[i]);
+
+			if ((pixel_2D_position(0) >= 0) &&
+				(pixel_2D_position(0) <= 512 - 1) &&
+				(pixel_2D_position(1) >= 0) &&
+				(pixel_2D_position(1) <= 424 - 1))
+			{
+				Eigen::Vector2i pixel_2D_closest;
+				pixel_2D_closest << idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] % 512, idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] / 512;
+
+				float closest_distance = (pixel_2D_closest(0) - pixel_2D_position(0))* (pixel_2D_closest(0) - pixel_2D_position(0)) 
+					+ (pixel_2D_closest(1) - pixel_2D_position(1))*(pixel_2D_closest(1) - pixel_2D_position(1));
+
+				if (closest_distance > 1)
+				{
+					//计算J和e
+					pair<Eigen::Matrix2Xf, Eigen::Vector2f> J_and_e;
+
+					//先算e
+					Eigen::Vector2f e;
+					e(0) = (float)pixel_2D_closest(0) - (float)pixel_2D_position(0);
+					e(1) = (float)pixel_2D_closest(1) - (float)pixel_2D_position(1);
+
+					J_and_e.second = e;
+
+					//再算J
+					Matrix_2x3 J_perspective = model->camera->projection_jacobian(pixel_3D_position);
+					Eigen::Matrix<float, 2, num_shape_thetas> J_2D = Eigen::MatrixXf::Zero(2, num_shape_thetas);    //J_2D = J_perspective * J_3D
+
+					J_2D = J_perspective*model->Compute_one_Vertice_Shape_Jacobian(vert_idx);
+
+					J_and_e.first = J_2D;
+
+					outside_silhouette.push_back(J_and_e);
+				}
+			}
+		}
+
+		int size = static_cast<int>(outside_silhouette.size());
+
+		if (size > 0)
+		{
+			Eigen::MatrixXf J_sil = Eigen::MatrixXf::Zero(2 * size, num_shape_thetas);
+
+			Eigen::VectorXf e_sil = Eigen::VectorXf::Zero(2 * size, 1);
+
+			for (int i = 0; i < size; i++)
+			{
+				J_sil.row(i * 2 + 0) = outside_silhouette[i].first.row(0);
+				J_sil.row(i * 2 + 1) = outside_silhouette[i].first.row(1);
+
+				e_sil.row(i * 2 + 0) = outside_silhouette[i].second.row(0);
+				e_sil.row(i * 2 + 1) = outside_silhouette[i].second.row(1);
+			}
+
+			float omiga = settings->fit2D_weight;
+			sys.Jt_J.noalias() += omiga*J_sil.transpose() * J_sil;
+			sys.Jt_e.noalias() += omiga*J_sil.transpose() * e_sil;
+
+			///--- Check
+			if (Energy::safety_check)
+				Energy::has_nan(sys);
+		}
+	}
+	void Energy_Fitting::track_Shape_2_2D_uing_Silhouette(LinearSystem &sys, int *idx_img)
+	{
+		vector<pair<Eigen::Matrix<float, 2, num_shape_thetas>, Eigen::Vector2f>> outside_silhouette;
+
+		for (int i = 0; i < model->Visible_Silhouette_2D.size(); i++)
+		{
+			int vert_idx = model->Visible_Silhouette_index[i];
+			Eigen::Vector3f pixel_3D_position(model->Vertices_update_(vert_idx,0), model->Vertices_update_(vert_idx, 1), model->Vertices_update_(vert_idx, 2));
+			Eigen::Vector2i pixel_2D_position(model->Visible_Silhouette_2D[i]);
+
+			if ((pixel_2D_position(0) >= 0) &&
+				(pixel_2D_position(0) <= 512 - 1) &&
+				(pixel_2D_position(1) >= 0) &&
+				(pixel_2D_position(1) <= 424 - 1))
+			{
+				Eigen::Vector2i pixel_2D_closest;
+				pixel_2D_closest << idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] % 512, idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] / 512;
+
+				float closest_distance = (pixel_2D_closest(0) - pixel_2D_position(0))* (pixel_2D_closest(0) - pixel_2D_position(0))
+					+ (pixel_2D_closest(1) - pixel_2D_position(1))*(pixel_2D_closest(1) - pixel_2D_position(1));
+
+				if (closest_distance > 1 && closest_distance < 15)   //这里不限制最大距离，会使得某些在图像内得手指为了达到图像边缘，越变越长
+				{
+					//计算J和e
+					pair<Eigen::Matrix2Xf, Eigen::Vector2f> J_and_e;
+
+					//先算e
+					Eigen::Vector2f e;
+					e(0) = (float)pixel_2D_closest(0) - (float)pixel_2D_position(0);
+					e(1) = (float)pixel_2D_closest(1) - (float)pixel_2D_position(1);
+
+					J_and_e.second = e;
+
+					//再算J
+					Matrix_2x3 J_perspective = model->camera->projection_jacobian(pixel_3D_position);
+					Eigen::Matrix<float, 2, num_shape_thetas> J_2D = Eigen::MatrixXf::Zero(2, num_shape_thetas);    //J_2D = J_perspective * J_3D
+
+					J_2D = J_perspective*model->Compute_one_Vertice_Shape_Jacobian(vert_idx);
+
+					J_and_e.first = J_2D;
+
+					outside_silhouette.push_back(J_and_e);
+				}
+			}
+		}
+
+		int size = static_cast<int>(outside_silhouette.size());
+
+		if (size > 0)
+		{
+			Eigen::MatrixXf J_sil = Eigen::MatrixXf::Zero(2 * size, num_shape_thetas);
+
+			Eigen::VectorXf e_sil = Eigen::VectorXf::Zero(2 * size, 1);
+
+			for (int i = 0; i < size; i++)
+			{
+				J_sil.row(i * 2 + 0) = outside_silhouette[i].first.row(0);
+				J_sil.row(i * 2 + 1) = outside_silhouette[i].first.row(1);
+
+				e_sil.row(i * 2 + 0) = outside_silhouette[i].second.row(0);
+				e_sil.row(i * 2 + 1) = outside_silhouette[i].second.row(1);
+			}
+
+			float omiga = settings->fit2D_weight;
+			sys.Jt_J.noalias() += omiga*J_sil.transpose() * J_sil;
+			sys.Jt_e.noalias() += omiga*J_sil.transpose() * e_sil;
+
+			///--- Check
+			if (Energy::safety_check)
+				Energy::has_nan(sys);
+		}
+	}
+	void Energy_Fitting::track_Shape_2(LinearSystem &sys, InputDataForTrack& inputdata)
+	{
+		this->track_Shape_2_3D(sys, inputdata.pointcloud_downsample);
+		//this->track_Shape_2_2D(sys, inputdata.idxs_img);
+		this->track_Shape_2_2D_uing_Silhouette(sys, inputdata.idxs_img);
+		this->track_Shape_2_2D_uing_Silhouette(sys, inputdata.inv_idxs_img);
 	}
 }

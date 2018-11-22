@@ -1,8 +1,19 @@
 #pragma once
+#include<pcl\point_types.h>
+#include<pcl\filters\voxel_grid.h>
+#include<pcl\filters\statistical_outlier_removal.h>
+//必须放在最前面，不知道为什么放在opencv后面就会无法使用statistical_outlier_removal这个方法（幺蛾子事件）
+
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
 #include <iostream>
 #include <limits>
+#include<opencv2/opencv.hpp>    
+#include<opencv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+#include<vector>
+
 using namespace std;
 
 #define PI 3.1415926f
@@ -66,4 +77,19 @@ struct TrackingError {
 	float error_3D;
 	float error_2D;
 	static TrackingError zero() { return{ 0, 0 }; }
+};
+
+struct InputDataForTrack
+{
+	cv::Mat depth_Kinect;
+	cv::Mat Handsegment;
+	cv::Mat Handsegment_inv;
+
+	pcl::PointCloud<pcl::PointXYZ> pointcloud_from_depth;
+	pcl::PointCloud<pcl::PointXYZ> pointcloud_filtered;
+	pcl::PointCloud<pcl::PointXYZ> pointcloud_downsample;
+
+	float params[26];
+	int idxs_img[424 * 512];
+	int inv_idxs_img[424 * 512];
 };

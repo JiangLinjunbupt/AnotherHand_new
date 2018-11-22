@@ -7,7 +7,7 @@ namespace energy {
 	class Energy_Limited : public Energy {
 	public:
 		HandModel * model = NULL;
-		bool jointlimits_enable = false;
+		bool jointlimits_enable = true;
 		bool shapelimits_enable = true;
 		float jointlimits_weight = 50;
 

@@ -9,12 +9,9 @@ Worker::Worker(HandModel * input_model) {
 
 	Target_joints = Eigen::MatrixXf::Zero(model->NumofJoints, 3);
 	Target_vertices = Eigen::MatrixXf::Zero(model->NumofVertices, 3);
-	Downsample_pointcloud.points.clear();
-	Downsample_pointcloud_center_x = 0.0f;
-	Downsample_pointcloud_center_y = 0.0f;
-	Downsample_pointcloud_center_z = 0.0f;
-	idx_img = new int[424 * 512];
-
+	
+	mypointcloud.camera = input_model->camera;
+	distance_transform.init(512, 424);
 }
 
 bool Worker::track_till_convergence(bool with_glove,bool shapeTracking) {
@@ -35,8 +32,7 @@ void Worker::track(int iter, bool with_glove) {
 
 	///--- Optimization phases	
 	LinearSystem system(num_thetas);
-	//eval_error = true;
-	E_fitting.track(system, Downsample_pointcloud, idx_img);
+	E_fitting.track(system, input_data_for_track);
 	//E_collision.track(system);
 	//E_temporal.track(system);
 	E_limits.track(system, with_glove);
@@ -63,7 +59,7 @@ void Worker::track_shape(int iter, bool with_glove)
 	///--- Optimization phases	
 	LinearSystem system(num_shape_thetas);
 	//eval_error = true;
-	E_fitting.track_Shape_2(system, Downsample_pointcloud);
+	E_fitting.track_Shape_2(system, input_data_for_track);
 	//E_fitting.track_Shape(system, Target_vertices, iter);
 	//E_fitting.track_Shape_Joints(system, Target_joints, rigid_only, eval_error, tracking_error.error_3D, tracking_error.error_2D, iter);
 	//E_collision.track(system);
@@ -73,31 +69,8 @@ void Worker::track_shape(int iter, bool with_glove)
 	/*if (rigid_only)
 	energy::Energy::rigid_only(system);*/
 
-
-	/*system.Jt_J.col(0).setZero();
-	system.Jt_J.row(0).setZero();
-	system.Jt_e.row(0).setZero();*/
-
-	//int end = 4;
-	//for (int c = 0; c < end; ++c)
-	//	system.Jt_J.col(c).setZero();
-	//for (int r = 0; r < end; ++r)
-	//{
-	//	system.Jt_J.row(r).setZero();
-	//	system.Jt_e.row(r).setZero();
-	//}
-	//int start = 5;
-	//for (int c = start; c < num_shape_thetas; ++c)
-	//	system.Jt_J.col(c).setZero();
-	//for (int r = start; r < num_shape_thetas; ++r)
-	//{
-	//	system.Jt_J.row(r).setZero();
-	//	system.Jt_e.row(r).setZero();
-	//}
-
 	//--- Solve 
 	Eigen::VectorXf delta_thetas = energy::Energy::solve(system);
-
 
 	for (int i = 0; i < this->model->NumofShape_Params; i++)
 		this->model->Shape_Params[i] += delta_thetas(i);
@@ -152,40 +125,44 @@ void Worker::load_target_vertices()
 	f.close();
 	printf("Load Target vertices succeed!!!\n");
 }
-void Worker::fetch_Input(string fileName, string fileName2)
+
+void Worker::fetch_Input(int index)
 {
-	//从文件中读取下采样后的深度值和距离变换后的idx_img
-	std::ifstream f;
-	f.open(fileName, std::ios::in);
-	int NumofDownSamplePoint;
-	f >> NumofDownSamplePoint;
-	Downsample_pointcloud.points.resize(NumofDownSamplePoint);
-	f >> Downsample_pointcloud_center_x >> Downsample_pointcloud_center_y >> Downsample_pointcloud_center_z;
-	for (int i = 0; i < NumofDownSamplePoint; ++i) {
-		pcl::PointXYZ p;
-		float col_, row_, depth_;
-		f >> col_ >> row_ >> depth_;
-		Eigen::Vector3f pixel_to_p = model->camera->depth_to_world(row_, col_, depth_);
-		p.x = pixel_to_p.x();
-		p.y = pixel_to_p.y();
-		p.z = pixel_to_p.z();
-		Downsample_pointcloud.points[i] = p;
+	string depth_img = ".\\test\\depth_" + to_string(index) + ".png";
+	string handsegment = ".\\test\\Hand_" + to_string(index) + ".jpg";
+	string params = ".\\test\\Params_" + to_string(index) + ".txt";
+
+	input_data_for_track.depth_Kinect = cv::imread(depth_img, CV_LOAD_IMAGE_UNCHANGED);  //这里采用CV_LOAD_IMAGE_UNCHANGED或者CV_LOAD_IMAGE_ANYDEPTH这个模式才可以真确的读入，不然读入都是不正确的，可能和存储的深度值是16位有关系。
+	input_data_for_track.Handsegment = cv::imread(handsegment, CV_LOAD_IMAGE_GRAYSCALE);
+
+	cv::flip(input_data_for_track.Handsegment, input_data_for_track.Handsegment, 0);
+	cv::bitwise_not(input_data_for_track.Handsegment, input_data_for_track.Handsegment_inv);
+
+	ifstream f;
+	f.open(params, ios::in);
+	for (int i = 3; i < num_thetas; ++i) f >> input_data_for_track.params[i];
+	for (int i = 4; i < num_thetas; ++i) input_data_for_track.params[i] = -input_data_for_track.params[i];
+
+
+	int count = 0;
+	int *sensor_indicator = new int[424 * 512];
+	int num_sensor_points = 0;
+	for (int row = 0; row < input_data_for_track.Handsegment.rows; ++row) {
+		for (int col = 0; col < input_data_for_track.Handsegment.cols; ++col) {
+			if (input_data_for_track.Handsegment.at<uchar>(row, col) != 255) continue;
+			if (count % 2 == 0) {
+				sensor_indicator[num_sensor_points++] = row * input_data_for_track.Handsegment.cols + col;
+			}
+			count++;
+		}
 	}
-	f.close();
-	Downsample_pointcloud_center_x = -Downsample_pointcloud_center_x;
-	Downsample_pointcloud_center_z = -Downsample_pointcloud_center_z;
-	printf("Load Target DownSamplePoint succeed!!!\n");
 
+	distance_transform.exec(input_data_for_track.Handsegment.data, 125);
+	std::copy(distance_transform.idxs_image_ptr(), distance_transform.idxs_image_ptr() + 424 * 512, input_data_for_track.idxs_img);
 
-	std::ifstream f2;
-	f2.open(fileName2, std::ios::in);
-	for (int i = 0; i < 424*512; ++i) {
-		int t;
-		f2 >> t;
-		if (t == i) idx_img[i] = 255;
-		else idx_img[i] = 0;
-	}
-	f2.close();
-	printf("Load Target idx succeed!!!\n");
+	distance_transform.exec(input_data_for_track.Handsegment_inv.data, 125);
+	std::copy(distance_transform.idxs_image_ptr(), distance_transform.idxs_image_ptr() + 424 * 512, input_data_for_track.inv_idxs_img);
 
+	mypointcloud.DepthMatToPointCloud(sensor_indicator, num_sensor_points, input_data_for_track);
+	delete[] sensor_indicator;
 }

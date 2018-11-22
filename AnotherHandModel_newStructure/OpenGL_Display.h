@@ -6,6 +6,8 @@
 
 namespace DS {
 
+	void mixShow();
+
 	struct Control {
 		int x;
 		int y;
@@ -459,15 +461,17 @@ namespace DS {
 
 	void draw_CloudPoint()
 	{
-		if (worker->Downsample_pointcloud.points.size() > 0)
+		if (worker->input_data_for_track.pointcloud_downsample.points.size() > 0)
 		{
 			glDisable(GL_LIGHT0);
 			glDisable(GL_LIGHTING);
 			glPointSize(2);
 			glBegin(GL_POINTS);
 			glColor3f(1.0f, 0.0f, 0.0f);
-			for (int i = 0; i < worker->Downsample_pointcloud.points.size(); i++) {
-				glVertex3d(worker->Downsample_pointcloud.points[i].x, worker->Downsample_pointcloud.points[i].y, worker->Downsample_pointcloud.points[i].z);
+			for (int i = 0; i < worker->input_data_for_track.pointcloud_downsample.points.size(); i++) {
+				glVertex3d(worker->input_data_for_track.pointcloud_downsample.points[i].x, 
+					worker->input_data_for_track.pointcloud_downsample.points[i].y, 
+					worker->input_data_for_track.pointcloud_downsample.points[i].z);
 			}
 			glEnd();
 		}
@@ -476,14 +480,16 @@ namespace DS {
 	{
 		glDisable(GL_LIGHT0);
 		glDisable(GL_LIGHTING);
-		if (worker->Downsample_pointcloud.points.size() > 0 && worker->E_fitting.cloud_correspond.size() > 0)
+		if (worker->input_data_for_track.pointcloud_downsample.points.size() > 0 && worker->E_fitting.cloud_correspond.size() > 0)
 		{
-			for (int i = 0; i < worker->Downsample_pointcloud.points.size(); i++)
+			for (int i = 0; i < worker->input_data_for_track.pointcloud_downsample.points.size(); i++)
 			{
 				glLineWidth(2);
 				glColor3f(1.0, 1.0, 1);
 				glBegin(GL_LINES);
-				glVertex3d(worker->Downsample_pointcloud.points[i].x, worker->Downsample_pointcloud.points[i].y, worker->Downsample_pointcloud.points[i].z);
+				glVertex3d(worker->input_data_for_track.pointcloud_downsample.points[i].x, 
+					worker->input_data_for_track.pointcloud_downsample.points[i].y, 
+					worker->input_data_for_track.pointcloud_downsample.points[i].z);
 				glVertex3d(worker->E_fitting.Handmodel_visible_cloud.points[worker->E_fitting.cloud_correspond[i]].x,
 					worker->E_fitting.Handmodel_visible_cloud.points[worker->E_fitting.cloud_correspond[i]].y,
 					worker->E_fitting.Handmodel_visible_cloud.points[worker->E_fitting.cloud_correspond[i]].z);
@@ -532,6 +538,7 @@ namespace DS {
 		control.gx = handmodel->Params[0];
 		control.gy = handmodel->Params[1];
 		control.gz = handmodel->Params[2];
+
 		double r = 210;
 		double x = r*cos(control.roty)*sin(control.rotx);
 		double y = r*sin(control.roty);
@@ -571,29 +578,25 @@ namespace DS {
 		{
 			if (itr == 0)
 			{
-				for (int i = 0; i < 26; ++i) handmodel->Params[i] = GetSharedMemeryPtr[i];
-
-				handmodel->Params[0] = worker->Downsample_pointcloud_center_x;
-				handmodel->Params[1] = worker->Downsample_pointcloud_center_y;
-				handmodel->Params[2] = worker->Downsample_pointcloud_center_z;
+				//从手套得数据
+				//for (int i = 3; i < 26; ++i) handmodel->Params[i] = GetSharedMemeryPtr[i];
+				handmodel->Params[0] = worker->input_data_for_track.params[0];
+				handmodel->Params[1] = worker->input_data_for_track.params[1];
+				handmodel->Params[2] = worker->input_data_for_track.params[2];
+				//从数据集得数据
+				for (int i = 0; i < 26; ++i) handmodel->Params[i] = worker->input_data_for_track.params[i];
 
 				for (int i = 0; i < num_shape_thetas; i++)
 				{
 					handmodel->Shape_Params[i] = 0;
 				}
 
-
-				handmodel->Shape_Params[0] = 0.7f;
+				handmodel->Shape_Params[0] = 0.9f;
 				handmodel->Shape_Params[3] = 1.0f;
 				handmodel->Shape_Params[7] = 1.0f;
 				handmodel->Shape_Params[11] = 1.0f;
 				handmodel->Shape_Params[15] = 1.0f;
 				handmodel->Shape_Params[19] = 1.0f;
-
-				//handmodel->Shape_Params[4] = -10.0f;
-				//handmodel->Shape_Params[8] = -11.0f;
-				//handmodel->Shape_Params[12] = -11.0f;
-				//handmodel->Shape_Params[16] = -11.0f;
 
 				handmodel->Updata(handmodel->Params,handmodel->Shape_Params);
 			}
@@ -610,17 +613,8 @@ namespace DS {
 		//duration = double(End - Begin) / CLK_TCK;//duration就是运行函数所打的
 		//std::cout << "time is : " << duration * 1000 << std::endl;
 
-		handmodel->Generate_img();
-		cv::flip(handmodel->outputImage, handmodel->outputImage, 0);
-		cv::imshow("img", handmodel->outputImage);
-		cv::waitKey(10);
 
-		//vector<vector<cv::Point> > contours;
-		//cv::findContours(handmodel->outputImage, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE); //找轮廓
-		//cv::Mat hole(handmodel->outputImage.size(), CV_8U, cv::Scalar(0)); //遮罩图层
-		//cv::drawContours(hole, contours, -1, cv::Scalar(255), CV_FILLED); //在遮罩图层上，用白色像素填充轮廓，得到MASK
-		//cv::imshow("My hole", hole);
-		//cv::waitKey(10);
+		mixShow();
 
 		glutPostRedisplay();
 	}
@@ -659,10 +653,64 @@ namespace DS {
 		initScene(800, 600);
 	}
 
-
 	void start() {
 		// 通知开始GLUT的内部循环
 		glutMainLoop();
 	}
 
+	void mixShow()
+	{
+		cv::Mat handsegment;
+		cv::Mat handmodel_generate = handmodel->Generate_img();
+		//cv::Mat handmodel_generate = handmodel->Generate_Skeleton_img();
+
+		cv::flip(worker->input_data_for_track.Handsegment, handsegment, 0);
+		cv::flip(handmodel_generate, handmodel_generate, 0);
+
+		int height = handmodel_generate.rows;
+		int width = handmodel_generate.cols;
+		cv::Mat colored_input1 = cv::Mat::zeros(height, width, CV_8UC3);
+		cv::Mat colored_input2 = cv::Mat::zeros(height, width, CV_8UC3);
+		cv::Mat dst;
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				if (handmodel_generate.at<uchar>(i, j) != 0)
+				{
+					colored_input1.at < cv::Vec3b>(i, j)[0] = 0;
+					colored_input1.at < cv::Vec3b>(i, j)[1] = 0;
+					colored_input1.at < cv::Vec3b>(i, j)[2] = 255;
+				}
+				else
+				{
+					colored_input1.at < cv::Vec3b>(i, j)[0] = 255;
+					colored_input1.at < cv::Vec3b>(i, j)[1] = 255;
+					colored_input1.at < cv::Vec3b>(i, j)[2] = 255;
+				}
+
+				if (handsegment.at<uchar>(i, j) != 0)
+				{
+					colored_input2.at < cv::Vec3b>(i, j)[0] = 0;
+					colored_input2.at < cv::Vec3b>(i, j)[1] = 255;
+					colored_input2.at < cv::Vec3b>(i, j)[2] = 0;
+				}
+				else
+				{
+
+					colored_input2.at < cv::Vec3b>(i, j)[0] = 255;
+					colored_input2.at < cv::Vec3b>(i, j)[1] = 255;
+					colored_input2.at < cv::Vec3b>(i, j)[2] = 255;
+
+				}
+
+			}
+		}
+
+		cv::addWeighted(colored_input1, 0.5, colored_input2, 0.5, 0.0, dst);
+
+		cv::line(dst, cv::Point2i(10, 10), cv::Point2i(20, 10), cv::Scalar(0, 0, 0), 1);
+		cv::imshow("Mixed Result", dst);
+		cvWaitKey(1);
+	}
 }

@@ -6,9 +6,6 @@
 #include<string>
 #include<ctime>
 #include"Camera.h"
-#include "opencv2/core/core.hpp"    
-#include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
 
 class HandModel
 {
@@ -29,8 +26,12 @@ public:
 
 	vector<Eigen::Vector3f> Visible_vertices;                   //可见顶点
 	vector<Eigen::Vector2i> Visible_vertices_2D;
-	vector<int>             Visible_vertices_index;            //可见顶点的引索          
+	vector<Eigen::Vector2i> Visible_Silhouette_2D;
+	vector<int>             Visible_Silhouette_index;
+	vector<int>             Visible_vertices_index;            //可见顶点的引索  
+
 	Matrix_Nx3              Joint_matrix;                      //这里是将joint*数组中的关节点位置整合到一个矩阵中
+	vector<Eigen::Vector2i> Visible_joints_2D;
 
 	int NumofVertices;
 	int NumofFaces;
@@ -92,5 +93,6 @@ public:
 	//显示参数
 	void Print_fingerLength();
 	void Save();
-	void Generate_img();
+	cv::Mat Generate_img();
+	cv::Mat Generate_Skeleton_img();
 };

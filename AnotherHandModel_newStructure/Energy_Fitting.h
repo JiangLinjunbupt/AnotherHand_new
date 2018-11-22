@@ -8,8 +8,8 @@ namespace energy {
 	public:
 		struct Settings {
 			///--- E_2D
-			bool  fit2D_enable = false;
-			float fit2D_weight = 1.0f;
+			bool  fit2D_enable = true;
+			float fit2D_weight = 0.4f;
 
 			///--- E_3D
 			bool  fit3D_enable = true;
@@ -35,7 +35,8 @@ namespace energy {
 
 		void track_3D(LinearSystem &sys, pcl::PointCloud<pcl::PointXYZ>& Downsample_cloud);
 		void track_2D(LinearSystem &sys, int *idx_img);
-		void track(LinearSystem &sys, pcl::PointCloud<pcl::PointXYZ>& Downsample_cloud, int *idx_img);
+		void track_2D_using_Silhouette(LinearSystem &sys, int *idx_img);
+		void track(LinearSystem &sys, InputDataForTrack& inputdata);
 
 
 		void track_Shape_Joints(LinearSystem &sys,
@@ -46,6 +47,10 @@ namespace energy {
 			float &error_2D,
 			int iter);
 		void track_Shape(LinearSystem &sys, Matrix_Nx3 &Target_vertices, int iter);
-		void track_Shape_2(LinearSystem &sys, pcl::PointCloud<pcl::PointXYZ>& Downsample_cloud);
+
+		void track_Shape_2_3D(LinearSystem &sys, pcl::PointCloud<pcl::PointXYZ>& Downsample_cloud);
+		void track_Shape_2_2D(LinearSystem &sys, int *idx_img);
+		void track_Shape_2_2D_uing_Silhouette(LinearSystem &sys, int *idx_img);
+		void track_Shape_2(LinearSystem &sys, InputDataForTrack& inputdata);
 	};
 } /// energy::

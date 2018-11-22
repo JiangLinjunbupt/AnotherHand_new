@@ -6,6 +6,8 @@
 #include"Energy_Damping.h"
 #include"TrackingMonitor.h"
 #include"HandModel.h"
+#include"MyPointCloud.h"
+#include"DistanceTransform.h"
 
 class Worker {
 
@@ -27,6 +29,8 @@ public:
 	energy::Energy_Temporal E_temporal;
 	energy::Energy_Damping E_damping;
 	TrackingMonitor monitor;
+	MyPointCloud mypointcloud;
+	DistanceTransform distance_transform;
 
 public:
 	//相关目标点变量
@@ -39,20 +43,15 @@ public:
 	void load_target_vertices();
 
 	//拟合点云数据
-	pcl::PointCloud<pcl::PointXYZ> Downsample_pointcloud;
-	float Downsample_pointcloud_center_x;
-	float Downsample_pointcloud_center_y;
-	float Downsample_pointcloud_center_z;
-	int *idx_img;
+	InputDataForTrack input_data_for_track;
 
 public:
 	Worker(HandModel * model);
 	~Worker() 
 	{
 		delete model;
-		delete idx_img;
 	}
-	void fetch_Input(string fileName, string fileName2);
+	void fetch_Input(int index);
 	void track(int iter, bool with_glove);
 	void track_shape(int iter, bool with_glove);
 	bool track_till_convergence(bool with_glove, bool shapeTracking);
