@@ -29,6 +29,7 @@ namespace DS {
 		MESH,
 		Skeleton,
 		WIRE_FRAME,
+		None,
 	};
 
 	int itr = 0;
@@ -97,6 +98,9 @@ namespace DS {
 				displayMode = Skeleton;
 				break;
 			case Skeleton:
+				displayMode = None;
+				break;
+			case None:
 				displayMode = MESH;
 				break;
 			default:
@@ -114,6 +118,13 @@ namespace DS {
 			//worker->save_target_vertices();
 			shapeTrack = !shapeTrack;
 		}
+
+
+		if (key == 'p')
+		{
+			worker->save_DatasetParams(0);
+		}
+
 	}
 	void mouseClick(int button, int state, int x, int y) {
 		control.mouse_click = 1;
@@ -527,6 +538,21 @@ namespace DS {
 		glEnd();
 	}
 
+	void draw_GroundTrueJoints()
+	{
+		glDisable(GL_LIGHT0);
+		glDisable(GL_LIGHTING);
+		for (int i = 0; i < handmodel->NumofJoints; ++i) {
+			//画点开始 
+			glColor3f(1.0, 1.0, 1.0);
+			glPushMatrix();
+			glTranslatef(worker->input_data_for_track.joint_read(i,0), worker->input_data_for_track.joint_read(i, 1), worker->input_data_for_track.joint_read(i, 2));
+			glutSolidSphere(3, 31, 10);
+			glPopMatrix();
+			//画点结束，使用push和popmatrix是因为保证每个关节点的偏移都是相对于全局坐标中心点做的变换。
+		}
+	}
+
 #pragma endregion A_Set_of_Draw_Funtion
 
 	void draw() {
@@ -561,12 +587,15 @@ namespace DS {
 			break;
 		}
 
+		//draw_Jointtarget_difference();
 	    //draw_Verticestarget_difference();
 		draw_Coordinate();
 		//draw_ALL_joint_coordinate();
 		//draw_Hand_visible_vertex();
 		draw_CloudPoint();
 		draw_Cooresponding_connection();
+
+		if(handmodel->camera->mode()!=CAMERAMODE(Kinect)) draw_GroundTrueJoints();
 		glFlush();
 		glutSwapBuffers();
 	}
@@ -580,6 +609,7 @@ namespace DS {
 			{
 				//从手套得数据
 				//for (int i = 3; i < 26; ++i) handmodel->Params[i] = GetSharedMemeryPtr[i];
+
 				handmodel->Params[0] = worker->input_data_for_track.params[0];
 				handmodel->Params[1] = worker->input_data_for_track.params[1];
 				handmodel->Params[2] = worker->input_data_for_track.params[2];
@@ -614,6 +644,15 @@ namespace DS {
 		//std::cout << "time is : " << duration * 1000 << std::endl;
 
 
+		float error = 0;
+		error += (handmodel->Joint_matrix.row(4) - worker->input_data_for_track.joint_read.row(4)).norm();
+		error += (handmodel->Joint_matrix.row(8) - worker->input_data_for_track.joint_read.row(8)).norm();
+		error += (handmodel->Joint_matrix.row(12) - worker->input_data_for_track.joint_read.row(12)).norm();
+		error += (handmodel->Joint_matrix.row(16) - worker->input_data_for_track.joint_read.row(16)).norm();
+		error += (handmodel->Joint_matrix.row(20) - worker->input_data_for_track.joint_read.row(20)).norm();
+
+		error /= 5;
+		if (handmodel->camera->mode()!=CAMERAMODE(Kinect)) cout << "error is : " << error << endl;
 		mixShow();
 
 		glutPostRedisplay();

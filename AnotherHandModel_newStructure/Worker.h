@@ -18,9 +18,9 @@ public:
 	} _settings;
 	Settings*const settings = &_settings;
 
-
 public:
 
+	Camera *camera;
 	HandModel * model;
 	TrackingError tracking_error;
 	energy::Energy_Fitting E_fitting;
@@ -42,17 +42,28 @@ public:
 	void save_target_vertices();
 	void load_target_vertices();
 
-	//拟合点云数据
+	void save_DatasetParams(int itr);
+
+	//所有从输入可以得到的数据
 	InputDataForTrack input_data_for_track;
 
 public:
-	Worker(HandModel * model);
+	Worker(HandModel * input_model, Camera *input_camera);
 	~Worker() 
 	{
 		delete model;
 	}
-	void fetch_Input(int index);
+
 	void track(int iter, bool with_glove);
 	void track_shape(int iter, bool with_glove);
 	bool track_till_convergence(bool with_glove, bool shapeTracking);
+
+
+
+
+	void fetch_Input(int index);
+
+	void fetch_KinectInput(int index);
+	void fetch_DatasetMSRA_14Inpute(int index);
+	void fetch_DatasetMSRA_15Inpute(int index);
 };

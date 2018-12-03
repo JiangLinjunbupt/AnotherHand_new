@@ -3,20 +3,22 @@
 
 void MyPointCloud::DepthMatToPointCloud(int *indicator, int Num_indicator, InputDataForTrack& inputdatafortrack)
 {
+	int camera_width = camera->width();
+	int camera_height = camera->height();
+
 	inputdatafortrack.pointcloud_from_depth.clear();
 	inputdatafortrack.params[0] = 0; inputdatafortrack.params[1] = 0; inputdatafortrack.params[2] = 0;
 	cv::Mat depth_flip;
-	cv::flip(inputdatafortrack.depth_Kinect, depth_flip, 0);
+	cv::flip(inputdatafortrack.depth, depth_flip, 0);
 
 	for (int i = 0; i < Num_indicator; i++)
 	{
 		pcl::PointXYZ p;
 
-		int col = indicator[i] % 512;        //x
-		int row = indicator[i] / 512;        //y
+		int col = indicator[i] % camera_width;        //x
+		int row = indicator[i] / camera_width;        //y
 
 		int z = depth_flip.at<unsigned short>(row, col);
-
 		Eigen::Vector3f p_pixel = camera->depth_to_world(row, col, z);
 
 		p.x = p_pixel.x();
@@ -36,7 +38,6 @@ void MyPointCloud::DepthMatToPointCloud(int *indicator, int Num_indicator, Input
 		inputdatafortrack.params[1] = inputdatafortrack.params[1] / (float)(inputdatafortrack.pointcloud_from_depth.points.size());
 		inputdatafortrack.params[2] = inputdatafortrack.params[2] / (float)(inputdatafortrack.pointcloud_from_depth.points.size());
 	}
-
 
 	RestrictGlobalPosition(inputdatafortrack, 10000);
 	Filter_visible_cloud(inputdatafortrack);

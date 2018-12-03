@@ -120,7 +120,7 @@ void HandModel::set_params_bound()
 		//thumb
 		ParamsUpperBound[6] = 10.0f;   ParamsLowerBound[6] = -60.0f;
 		ParamsUpperBound[7] = 90.0f;   ParamsLowerBound[7] = -10.0f;
-		ParamsUpperBound[8] = 50.0f;   ParamsLowerBound[8] = -10.0f;
+		ParamsUpperBound[8] = 40.0f;   ParamsLowerBound[8] = -10.0f;
 		ParamsUpperBound[9] = 90.0f;   ParamsLowerBound[9] = -10.0f;
 
 		//index
@@ -203,7 +203,7 @@ void HandModel::Init_HandModel()
 			Joints[0].joint_name = "Wrist";
 			Joints[0].joint_index = 0;
 			Joints[0].GlobalInitPosition << 0.0f, 0.0f, 0.0f, 1.0f;
-			Joints[0].ChildGlobalInitPosition << -0.399423f, 84.5637f, -2.46058f, 1.0f;
+			Joints[0].ChildGlobalInitPosition << -0.466003, 81.5657, -2.2004, 1;
 			Joints[0].parent_joint_index = -1;
 
 			Joints[0].pose_params_length = 6;
@@ -228,7 +228,7 @@ void HandModel::Init_HandModel()
 				Joints[1].joint_name = "ThumbLower";
 				Joints[1].joint_index = 1;
 				Joints[1].GlobalInitPosition << -28.468f, 27.4715f, -18.4322f, 1.0f;
-				Joints[1].ChildGlobalInitPosition << -63.5129f, 52.0925f, -35.8438f, 1.0f;
+				Joints[1].ChildGlobalInitPosition << -57.3719f, 44.0606f, -31.1096f, 1.0f;
 				Joints[1].parent_joint_index = 0;
 
 				Joints[1].pose_params_length = 2;
@@ -243,8 +243,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[2].joint_name = "ThumbMiddle";
 				Joints[2].joint_index = 2;
-				Joints[2].GlobalInitPosition << -63.5129f, 52.0925f, -35.8438f, 1.0f;
-				Joints[2].ChildGlobalInitPosition << -80.7877f, 74.8383f, -49.2702f, 1.0f;
+				Joints[2].GlobalInitPosition << -57.3719f, 44.0606f, -31.1096f, 1.0f;
+				Joints[2].ChildGlobalInitPosition << -74.6467f, 66.8064f, -44.536f, 1.0f;
 				Joints[2].parent_joint_index = 1;
 
 				Joints[2].pose_params_length = 1;
@@ -259,8 +259,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[3].joint_name = "ThumbTop";
 				Joints[3].joint_index = 3;
-				Joints[3].GlobalInitPosition << -80.7877f, 74.8383f, -49.2702f, 1.0f;
-				Joints[3].ChildGlobalInitPosition << -91.3441f, 96.1361f, -62.7773f, 1.0f;
+				Joints[3].GlobalInitPosition << -74.6467f, 66.8064f, -44.536f, 1.0f;
+				Joints[3].ChildGlobalInitPosition << -85.2031f, 88.1042f, -58.0431f, 1.0f;
 				Joints[3].parent_joint_index = 2;
 
 				Joints[3].pose_params_length = 1;
@@ -276,7 +276,7 @@ void HandModel::Init_HandModel()
 			{
 				Joints[4].joint_name = "ThumbSite";
 				Joints[4].joint_index = 4;
-				Joints[4].GlobalInitPosition << -91.3441f, 96.1361f, -62.7773f, 1.0f;
+				Joints[4].GlobalInitPosition << -85.2031f, 88.1042f, -58.0431f, 1.0f;
 				Joints[4].HasChild = false;
 				Joints[4].parent_joint_index = 3;
 
@@ -293,8 +293,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[5].joint_name = "IndexLower";
 				Joints[5].joint_index = 5;
-				Joints[5].GlobalInitPosition << -25.5361f, 84.2559f, -2.98504f, 1.0f;
-				Joints[5].ChildGlobalInitPosition << -30.5187f, 123.568f, -5.80625f, 1.0f;
+				Joints[5].GlobalInitPosition << -25.29, 82.3287, -2.863, 1;
+				Joints[5].ChildGlobalInitPosition << -30.2727, 121.641, -5.68421, 1;
 				Joints[5].parent_joint_index = 0;
 
 				Joints[5].pose_params_length = 2;
@@ -310,8 +310,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[6].joint_name = "IndexMiddle";
 				Joints[6].joint_index = 6;
-				Joints[6].GlobalInitPosition << -30.5187f, 123.568f, -5.80625f, 1.0f;
-				Joints[6].ChildGlobalInitPosition << -32.45f, 144.277f, -14.0787f, 1.0f;
+				Joints[6].GlobalInitPosition << -30.2727, 121.641, -5.68421, 1;
+				Joints[6].ChildGlobalInitPosition << -32.204, 142.35, -13.9566, 1;
 				Joints[6].parent_joint_index = 5;
 
 				Joints[6].pose_params_length = 1;
@@ -326,8 +326,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[7].joint_name = "IndexTop";
 				Joints[7].joint_index = 7;
-				Joints[7].GlobalInitPosition << -32.45f, 144.277f, -14.0787f, 1.0f;
-				Joints[7].ChildGlobalInitPosition << -33.5417f, 162.155f, -22.184f, 1.0f;
+				Joints[7].GlobalInitPosition << -32.204, 142.35, -13.9566, 1;
+				Joints[7].ChildGlobalInitPosition << -33.2957, 160.228, -22.062, 1;
 				Joints[7].parent_joint_index = 6;
 
 				Joints[7].pose_params_length = 1;
@@ -343,7 +343,7 @@ void HandModel::Init_HandModel()
 			{
 				Joints[8].joint_name = "IndexSite";
 				Joints[8].joint_index = 8;
-				Joints[8].GlobalInitPosition << -33.5417f, 162.155f, -22.184f, 1.0f;
+				Joints[8].GlobalInitPosition << -33.2957, 160.228, -22.062, 1;
 				Joints[8].HasChild = false;
 				Joints[8].parent_joint_index = 7;
 
@@ -360,8 +360,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[9].joint_name = "MiddleLower";
 				Joints[9].joint_index = 9;
-				Joints[9].GlobalInitPosition << -0.399423f, 84.5637f, -2.46058f, 1.0f;
-				Joints[9].ChildGlobalInitPosition << 0.735502f, 129.175f, -5.76824f, 1.0f;
+				Joints[9].GlobalInitPosition << -0.466003, 81.5657, -2.2004, 1;
+				Joints[9].ChildGlobalInitPosition << 0.668922, 126.177, -5.50806, 1;
 				Joints[9].parent_joint_index = 0;
 
 				Joints[9].pose_params_length = 2;
@@ -377,8 +377,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[10].joint_name = "MiddleMiddle";
 				Joints[10].joint_index = 10;
-				Joints[10].GlobalInitPosition << 0.735502f, 129.175f, -5.76824f, 1.0f;
-				Joints[10].ChildGlobalInitPosition << -1.19208f, 152.724f, -17.399f, 1.0f;
+				Joints[10].GlobalInitPosition << 0.668922, 126.177, -5.50806, 1;
+				Joints[10].ChildGlobalInitPosition << -1.25866, 149.726, -17.1388, 1;
 				Joints[10].parent_joint_index = 9;
 
 				Joints[10].pose_params_length = 1;
@@ -393,8 +393,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[11].joint_name = "MiddleTop";
 				Joints[11].joint_index = 11;
-				Joints[11].GlobalInitPosition << -1.19208f, 152.724f, -17.399f, 1.0f;
-				Joints[11].ChildGlobalInitPosition << -3.1667f, 171.001f, -28.2518f, 1.0f;
+				Joints[11].GlobalInitPosition << -1.25866, 149.726, -17.1388, 1;
+				Joints[11].ChildGlobalInitPosition << -3.23328, 168.003, -27.9916, 1;
 				Joints[11].parent_joint_index = 10;
 
 				Joints[11].pose_params_length = 1;
@@ -410,7 +410,7 @@ void HandModel::Init_HandModel()
 			{
 				Joints[12].joint_name = "MiddleSite";
 				Joints[12].joint_index = 12;
-				Joints[12].GlobalInitPosition << -3.1667f, 171.001f, -28.2518f, 1.0f;
+				Joints[12].GlobalInitPosition << -3.23328, 168.003, -27.9916, 1;
 				Joints[12].HasChild = false;
 				Joints[12].parent_joint_index = 11;
 
@@ -427,8 +427,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[13].joint_name = "RingLower";
 				Joints[13].joint_index = 13;
-				Joints[13].GlobalInitPosition << 17.9766f, 75.7575f, -5.24194f, 1.0f;
-				Joints[13].ChildGlobalInitPosition << 25.3781f, 116.629f, -9.22043f, 1.0f;
+				Joints[13].GlobalInitPosition << 18.433, 78.3977, -5.57517, 1;
+				Joints[13].ChildGlobalInitPosition << 25.8345, 119.269, -9.55367, 1;
 				Joints[13].parent_joint_index = 0;
 
 				Joints[13].pose_params_length = 2;
@@ -444,8 +444,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[14].joint_name = "RingMiddle";
 				Joints[14].joint_index = 14;
-				Joints[14].GlobalInitPosition << 25.3781f, 116.629f, -9.22043f, 1.0f;
-				Joints[14].ChildGlobalInitPosition << 25.3024f, 137.195f, -24.547f, 1.0f;
+				Joints[14].GlobalInitPosition << 25.8345, 119.269, -9.55367, 1;
+				Joints[14].ChildGlobalInitPosition << 25.7588, 139.835, -24.8802, 1;
 				Joints[14].parent_joint_index = 13;
 
 				Joints[14].pose_params_length = 1;
@@ -460,8 +460,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[15].joint_name = "RingTop";
 				Joints[15].joint_index = 15;
-				Joints[15].GlobalInitPosition << 25.3024f, 137.195f, -24.547f, 1.0f;
-				Joints[15].ChildGlobalInitPosition << 24.7268f, 153.522f, -38.1339f, 1.0f;
+				Joints[15].GlobalInitPosition << 25.7588, 139.835, -24.8802, 1;
+				Joints[15].ChildGlobalInitPosition << 25.1832, 156.163, -38.4672, 1;
 				Joints[15].parent_joint_index = 14;
 
 				Joints[15].pose_params_length = 1;
@@ -477,7 +477,7 @@ void HandModel::Init_HandModel()
 			{
 				Joints[16].joint_name = "RingSite";
 				Joints[16].joint_index = 16;
-				Joints[16].GlobalInitPosition << 24.7268f, 153.522f, -38.1339f, 1.0f;
+				Joints[16].GlobalInitPosition << 25.1832, 156.163, -38.4672, 1;
 				Joints[16].HasChild = false;
 				Joints[16].parent_joint_index = 15;
 
@@ -495,8 +495,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[17].joint_name = "PinkeyLower";
 				Joints[17].joint_index = 17;
-				Joints[17].GlobalInitPosition << 33.4795f, 65.2179f, -8.45142f, 1.0f;
-				Joints[17].ChildGlobalInitPosition << 44.1109f, 94.4087f, -18.2167f, 1.0f;
+				Joints[17].GlobalInitPosition << 35.353, 70.1487, -9.93717, 1;
+				Joints[17].ChildGlobalInitPosition << 45.9844, 99.3395, -19.7024, 1;
 				Joints[17].parent_joint_index = 0;
 
 				Joints[17].pose_params_length = 2;
@@ -512,8 +512,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[18].joint_name = "PinkeyMiddle";
 				Joints[18].joint_index = 18;
-				Joints[18].GlobalInitPosition << 44.1109f, 94.4087f, -18.2167f, 1.0f;
-				Joints[18].ChildGlobalInitPosition << 47.1591f, 109.145f, -28.3087f, 1.0f;
+				Joints[18].GlobalInitPosition << 45.9844, 99.3395, -19.7024, 1;
+				Joints[18].ChildGlobalInitPosition << 49.0326, 114.076, -29.7944, 1;
 				Joints[18].parent_joint_index = 17;
 
 				Joints[18].pose_params_length = 1;
@@ -528,8 +528,8 @@ void HandModel::Init_HandModel()
 			{
 				Joints[19].joint_name = "PinkeyTop";
 				Joints[19].joint_index = 19;
-				Joints[19].GlobalInitPosition << 47.1591f, 109.145f, -28.3087f, 1.0f;
-				Joints[19].ChildGlobalInitPosition << 48.8287f, 124.917f, -39.9742f, 1.0f;
+				Joints[19].GlobalInitPosition << 49.0326, 114.076, -29.7944, 1;
+				Joints[19].ChildGlobalInitPosition << 50.7022, 129.847, -41.46, 1;
 				Joints[19].parent_joint_index = 18;
 
 				Joints[19].pose_params_length = 1;
@@ -545,7 +545,7 @@ void HandModel::Init_HandModel()
 			{
 				Joints[20].joint_name = "PinkeySite";
 				Joints[20].joint_index = 20;
-				Joints[20].GlobalInitPosition << 48.8287f, 124.917f, -39.9742f, 1.0f;
+				Joints[20].GlobalInitPosition << 50.7022, 129.847, -41.46, 1;
 				Joints[20].HasChild = false;
 				Joints[20].parent_joint_index = 19;
 
@@ -600,14 +600,14 @@ void HandModel::Init_HandModel()
 	this->Shape_ParamsUpperBound = new float[NumofShape_Params]();
 	this->Shape_ParamsLowerBound = new float[NumofShape_Params]();
 
-	this->Shape_Params[0] = 0.8f; 
+	this->Shape_Params[0] = 1.0f; 
 	this->Shape_Params[3] = 1.0f;
 	this->Shape_Params[7] =1.0f;
 	this->Shape_Params[11] = 1.0f;
 	this->Shape_Params[15] = 1.0f;
 	this->Shape_Params[19] = 1.0f;
 
-	outputImage = cv::Mat::zeros(424, 512, CV_8UC1);
+	outputImage = cv::Mat::zeros(camera->height(), camera->width(), CV_8UC1);
 
 	this->set_local_coordinate();
 	this->set_parent_child_transform();
@@ -1640,18 +1640,21 @@ void HandModel::Save()
 
 cv::Mat HandModel::Generate_img()
 {
+	int camera_height = camera->height();
+	int camera_width = camera->width();
 	outputImage.setTo(0);
 	uchar * pointer = outputImage.data;
 	//cout << "size" << Visible_vertices_2D.size() << endl;
 	for (int i = 0; i < Visible_Silhouette_2D.size(); i++)
 	{
 		if((Visible_Silhouette_2D[i](0)>=0) &&
-			(Visible_Silhouette_2D[i](0) <=512-1) &&
+			(Visible_Silhouette_2D[i](0) <= camera_width -1) &&
 			(Visible_Silhouette_2D[i](1) >= 0)&&
-			(Visible_Silhouette_2D[i](1) <=424-1) )
+			(Visible_Silhouette_2D[i](1) <= camera_height -1) )
 
-			pointer[Visible_Silhouette_2D[i](1)*512 + Visible_Silhouette_2D[i](0)] = 255;
+			pointer[Visible_Silhouette_2D[i](1)*camera_width + Visible_Silhouette_2D[i](0)] = 255;
 	}
+
 
 	//vector<vector<cv::Point> > contours;
 	//cv::findContours(outputImage, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE); //ÕÒÂÖÀª
@@ -1665,14 +1668,17 @@ cv::Mat HandModel::Generate_img()
 
 cv::Mat HandModel::Generate_Skeleton_img()
 {
-	cv::Mat out = cv::Mat::zeros(424, 512, CV_8UC1);
+	int camera_height = camera->height();
+	int camera_width = camera->width();
+
+	cv::Mat out = cv::Mat::zeros(camera_height, camera_width, CV_8UC1);
 
 	for (int i = 0; i < NumofJoints; ++i)
 	{
 		if ((Visible_joints_2D[i](0) >= 0) &&
-			(Visible_joints_2D[i](0) <= 512 - 1) &&
+			(Visible_joints_2D[i](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i](1) >= 0) &&
-			(Visible_joints_2D[i](1) <= 424 - 1))
+			(Visible_joints_2D[i](1) <= camera_height - 1))
 		{
 			cv::circle(out, cv::Point2i(Visible_joints_2D[i](0), Visible_joints_2D[i](1)), 3, cv::Scalar(255), -1);
 		}
@@ -1683,13 +1689,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 	{
 
 		if (((Visible_joints_2D[0](0) >= 0) &&
-			(Visible_joints_2D[0](0) <= 512 - 1) &&
+			(Visible_joints_2D[0](0) <= camera_width - 1) &&
 			(Visible_joints_2D[0](1) >= 0) &&
-			(Visible_joints_2D[0](1) <= 424 - 1)) &&
+			(Visible_joints_2D[0](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[1](0) >= 0) &&
-			(Visible_joints_2D[1](0) <= 512 - 1) &&
+			(Visible_joints_2D[1](0) <= camera_width - 1) &&
 				(Visible_joints_2D[1](1) >= 0) &&
-				(Visible_joints_2D[1](1) <= 424 - 1)))
+				(Visible_joints_2D[1](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[0](0), Visible_joints_2D[0](1)),
 				cv::Point2i(Visible_joints_2D[1](0), Visible_joints_2D[1](1)),
@@ -1697,13 +1703,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[0](0) >= 0) &&
-			(Visible_joints_2D[0](0) <= 512 - 1) &&
+			(Visible_joints_2D[0](0) <= camera_width - 1) &&
 			(Visible_joints_2D[0](1) >= 0) &&
-			(Visible_joints_2D[0](1) <= 424 - 1)) &&
+			(Visible_joints_2D[0](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[5](0) >= 0) &&
-			(Visible_joints_2D[5](0) <= 512 - 1) &&
+			(Visible_joints_2D[5](0) <= camera_width - 1) &&
 				(Visible_joints_2D[5](1) >= 0) &&
-				(Visible_joints_2D[5](1) <= 424 - 1)))
+				(Visible_joints_2D[5](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[0](0), Visible_joints_2D[0](1)),
 				cv::Point2i(Visible_joints_2D[5](0), Visible_joints_2D[5](1)),
@@ -1711,13 +1717,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[0](0) >= 0) &&
-			(Visible_joints_2D[0](0) <= 512 - 1) &&
+			(Visible_joints_2D[0](0) <= camera_width - 1) &&
 			(Visible_joints_2D[0](1) >= 0) &&
-			(Visible_joints_2D[0](1) <= 424 - 1)) &&
+			(Visible_joints_2D[0](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[9](0) >= 0) &&
-			(Visible_joints_2D[9](0) <= 512 - 1) &&
+			(Visible_joints_2D[9](0) <= camera_width - 1) &&
 				(Visible_joints_2D[9](1) >= 0) &&
-				(Visible_joints_2D[9](1) <= 424 - 1)))
+				(Visible_joints_2D[9](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[0](0), Visible_joints_2D[0](1)),
 				cv::Point2i(Visible_joints_2D[9](0), Visible_joints_2D[9](1)),
@@ -1725,13 +1731,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[0](0) >= 0) &&
-			(Visible_joints_2D[0](0) <= 512 - 1) &&
+			(Visible_joints_2D[0](0) <= camera_width - 1) &&
 			(Visible_joints_2D[0](1) >= 0) &&
-			(Visible_joints_2D[0](1) <= 424 - 1)) &&
+			(Visible_joints_2D[0](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[13](0) >= 0) &&
-			(Visible_joints_2D[13](0) <= 512 - 1) &&
+			(Visible_joints_2D[13](0) <= camera_width - 1) &&
 				(Visible_joints_2D[13](1) >= 0) &&
-				(Visible_joints_2D[13](1) <= 424 - 1)))
+				(Visible_joints_2D[13](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[0](0), Visible_joints_2D[0](1)),
 				cv::Point2i(Visible_joints_2D[13](0), Visible_joints_2D[13](1)),
@@ -1739,13 +1745,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[0](0) >= 0) &&
-			(Visible_joints_2D[0](0) <= 512 - 1) &&
+			(Visible_joints_2D[0](0) <= camera_width - 1) &&
 			(Visible_joints_2D[0](1) >= 0) &&
-			(Visible_joints_2D[0](1) <= 424 - 1)) &&
+			(Visible_joints_2D[0](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[17](0) >= 0) &&
-			(Visible_joints_2D[17](0) <= 512 - 1) &&
+			(Visible_joints_2D[17](0) <= camera_width - 1) &&
 				(Visible_joints_2D[17](1) >= 0) &&
-				(Visible_joints_2D[17](1) <= 424 - 1)))
+				(Visible_joints_2D[17](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[0](0), Visible_joints_2D[0](1)),
 				cv::Point2i(Visible_joints_2D[17](0), Visible_joints_2D[17](1)),
@@ -1758,13 +1764,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 	{
 		int i = 1;
 		if (((Visible_joints_2D[i](0) >= 0) &&
-			(Visible_joints_2D[i](0) <= 512 - 1) &&
+			(Visible_joints_2D[i](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i](1) >= 0) &&
-			(Visible_joints_2D[i](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 1](1) >= 0) &&
-				(Visible_joints_2D[i + 1](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 1](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i](0), Visible_joints_2D[i](1)),
 				cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
@@ -1772,13 +1778,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 1](1) >= 0) &&
-			(Visible_joints_2D[i + 1](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 1](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 2](1) >= 0) &&
-				(Visible_joints_2D[i + 2](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 2](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
 				cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
@@ -1786,13 +1792,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 2](1) >= 0) &&
-			(Visible_joints_2D[i + 2](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 2](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 3](0) >= 0) &&
-			(Visible_joints_2D[i + 3](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 3](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 3](1) >= 0) &&
-				(Visible_joints_2D[i + 3](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 3](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
 				cv::Point2i(Visible_joints_2D[i + 3](0), Visible_joints_2D[i + 3](1)),
@@ -1803,13 +1809,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 	{
 		int i = 5;
 		if (((Visible_joints_2D[i](0) >= 0) &&
-			(Visible_joints_2D[i](0) <= 512 - 1) &&
+			(Visible_joints_2D[i](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i](1) >= 0) &&
-			(Visible_joints_2D[i](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 1](1) >= 0) &&
-				(Visible_joints_2D[i + 1](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 1](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i](0), Visible_joints_2D[i](1)),
 				cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
@@ -1817,13 +1823,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 1](1) >= 0) &&
-			(Visible_joints_2D[i + 1](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 1](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 2](1) >= 0) &&
-				(Visible_joints_2D[i + 2](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 2](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
 				cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
@@ -1831,13 +1837,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 2](1) >= 0) &&
-			(Visible_joints_2D[i + 2](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 2](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 3](0) >= 0) &&
-			(Visible_joints_2D[i + 3](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 3](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 3](1) >= 0) &&
-				(Visible_joints_2D[i + 3](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 3](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
 				cv::Point2i(Visible_joints_2D[i + 3](0), Visible_joints_2D[i + 3](1)),
@@ -1848,13 +1854,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 	{
 		int i = 9;
 		if (((Visible_joints_2D[i](0) >= 0) &&
-			(Visible_joints_2D[i](0) <= 512 - 1) &&
+			(Visible_joints_2D[i](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i](1) >= 0) &&
-			(Visible_joints_2D[i](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 1](1) >= 0) &&
-				(Visible_joints_2D[i + 1](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 1](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i](0), Visible_joints_2D[i](1)),
 				cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
@@ -1862,13 +1868,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 1](1) >= 0) &&
-			(Visible_joints_2D[i + 1](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 1](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 2](1) >= 0) &&
-				(Visible_joints_2D[i + 2](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 2](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
 				cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
@@ -1876,13 +1882,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 2](1) >= 0) &&
-			(Visible_joints_2D[i + 2](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 2](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 3](0) >= 0) &&
-			(Visible_joints_2D[i + 3](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 3](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 3](1) >= 0) &&
-				(Visible_joints_2D[i + 3](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 3](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
 				cv::Point2i(Visible_joints_2D[i + 3](0), Visible_joints_2D[i + 3](1)),
@@ -1893,13 +1899,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 	{
 		int i = 13;
 		if (((Visible_joints_2D[i](0) >= 0) &&
-			(Visible_joints_2D[i](0) <= 512 - 1) &&
+			(Visible_joints_2D[i](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i](1) >= 0) &&
-			(Visible_joints_2D[i](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 1](1) >= 0) &&
-				(Visible_joints_2D[i + 1](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 1](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i](0), Visible_joints_2D[i](1)),
 				cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
@@ -1907,13 +1913,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 1](1) >= 0) &&
-			(Visible_joints_2D[i + 1](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 1](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 2](1) >= 0) &&
-				(Visible_joints_2D[i + 2](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 2](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
 				cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
@@ -1921,13 +1927,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 2](1) >= 0) &&
-			(Visible_joints_2D[i + 2](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 2](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 3](0) >= 0) &&
-			(Visible_joints_2D[i + 3](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 3](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 3](1) >= 0) &&
-				(Visible_joints_2D[i + 3](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 3](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
 				cv::Point2i(Visible_joints_2D[i + 3](0), Visible_joints_2D[i + 3](1)),
@@ -1938,13 +1944,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 	{
 		int i = 17;
 		if (((Visible_joints_2D[i](0) >= 0) &&
-			(Visible_joints_2D[i](0) <= 512 - 1) &&
+			(Visible_joints_2D[i](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i](1) >= 0) &&
-			(Visible_joints_2D[i](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 1](1) >= 0) &&
-				(Visible_joints_2D[i + 1](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 1](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i](0), Visible_joints_2D[i](1)),
 				cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
@@ -1952,13 +1958,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 1](0) >= 0) &&
-			(Visible_joints_2D[i + 1](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 1](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 1](1) >= 0) &&
-			(Visible_joints_2D[i + 1](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 1](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 2](1) >= 0) &&
-				(Visible_joints_2D[i + 2](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 2](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 1](0), Visible_joints_2D[i + 1](1)),
 				cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
@@ -1966,13 +1972,13 @@ cv::Mat HandModel::Generate_Skeleton_img()
 		}
 
 		if (((Visible_joints_2D[i + 2](0) >= 0) &&
-			(Visible_joints_2D[i + 2](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 2](0) <= camera_width - 1) &&
 			(Visible_joints_2D[i + 2](1) >= 0) &&
-			(Visible_joints_2D[i + 2](1) <= 424 - 1)) &&
+			(Visible_joints_2D[i + 2](1) <= camera_height - 1)) &&
 			((Visible_joints_2D[i + 3](0) >= 0) &&
-			(Visible_joints_2D[i + 3](0) <= 512 - 1) &&
+			(Visible_joints_2D[i + 3](0) <= camera_width - 1) &&
 				(Visible_joints_2D[i + 3](1) >= 0) &&
-				(Visible_joints_2D[i + 3](1) <= 424 - 1)))
+				(Visible_joints_2D[i + 3](1) <= camera_height - 1)))
 		{
 			cv::line(out, cv::Point2i(Visible_joints_2D[i + 2](0), Visible_joints_2D[i + 2](1)),
 				cv::Point2i(Visible_joints_2D[i + 3](0), Visible_joints_2D[i + 3](1)),
@@ -1984,11 +1990,11 @@ cv::Mat HandModel::Generate_Skeleton_img()
 	//for (int i = 0; i < Visible_vertices_2D.size(); i++)
 	//{
 	//	if((Visible_vertices_2D[i](0)>=0) && 
-	//		(Visible_vertices_2D[i](0) <=512-1) && 
+	//		(Visible_vertices_2D[i](0) <=camera_width-1) && 
 	//		(Visible_vertices_2D[i](1) >= 0)&& 
-	//		(Visible_vertices_2D[i](1) <=424-1) )
+	//		(Visible_vertices_2D[i](1) <=camera_height-1) )
 
-	//		pointer[Visible_vertices_2D[i](1)*512 + Visible_vertices_2D[i](0)] = 255;
+	//		pointer[Visible_vertices_2D[i](1)*camera_width + Visible_vertices_2D[i](0)] = 255;
 	//}
 
 	return out;

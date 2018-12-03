@@ -9,7 +9,7 @@ namespace energy {
 		struct Settings {
 			///--- E_2D
 			bool  fit2D_enable = true;
-			float fit2D_weight = 0.4f;
+			float fit2D_weight = 0.1f;
 
 			///--- E_3D
 			bool  fit3D_enable = true;

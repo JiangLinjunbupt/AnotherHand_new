@@ -9,17 +9,45 @@
 //          z /                                                                |                  |y
 //                                                                             |y                 |
 //                                      因此，要对深度图进行cv::filp(img,img,0)绕x轴翻转，得到    O-------x这样的坐标之后，再进行转世界坐标系
-Camera::Camera() {
-	//kinect 2.0 的深度空间的高*宽是 424 * 512，在官网上有说明
-	_width = 512;
-	_height = 424;
+Camera::Camera(CAMERAMODE mode) :_mode(mode){
 
-	_focal_length_x = 381.8452f;
-	_focal_length_y = 382.1713f;
+	switch (_mode)
+	{
+	case Kinect:
+		//kinect 2.0 的深度空间的高*宽是 424 * 512，在官网上有说明
+		_width = 512;
+		_height = 424;
 
-	centerx = 264.0945f;
-	centery = 217.1487f;
+		_focal_length_x = 381.8452f;
+		_focal_length_y = 382.1713f;
 
+		centerx = 264.0945f;
+		centery = 217.1487f;
+		break;
+	case Dataset_MSRA_14:
+		_width = 320;
+		_height = 240;
+
+		_focal_length_x = 241.42f;
+		_focal_length_y = 241.42f;
+
+		centerx = 160.0f;
+		centery = 120.0f;
+		break;
+	case Dataset_MSRA_15:
+		_width = 320;
+		_height = 240;
+
+		_focal_length_x = 241.42f;
+		_focal_length_y = 241.42f;
+
+		centerx = 160.0f;
+		centery = 120.0f;
+		break;
+	default:
+		cout << "Invalid CAMERAMODE !!!\n";
+		exit(1000);
+	}
 }
 
 

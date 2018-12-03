@@ -129,6 +129,9 @@ namespace energy
 
 	void Energy_Fitting::track_2D(LinearSystem &sys, int *idx_img)
 	{
+		int camera_width = model->camera->width();
+		int camera_height = model->camera->height();
+
 		vector<pair<Eigen::Matrix<float, 2, num_thetas>, Eigen::Vector2f>> outside_silhouette;
 
 		for (int i = 0; i < model->Visible_vertices_2D.size(); i++)
@@ -138,12 +141,12 @@ namespace energy
 			Eigen::Vector2i pixel_2D_position(model->Visible_vertices_2D[i]);
 
 			if ((pixel_2D_position(0) >= 0) &&
-				(pixel_2D_position(0) <= 512 - 1) &&
+				(pixel_2D_position(0) <= camera_width - 1) &&
 				(pixel_2D_position(1) >= 0) &&
-				(pixel_2D_position(1) <= 424 - 1))
+				(pixel_2D_position(1) <= camera_height - 1))
 			{
 				Eigen::Vector2i pixel_2D_closest;
-				pixel_2D_closest << idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] % 512, idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] / 512;
+				pixel_2D_closest << idx_img[pixel_2D_position(1) * camera_width + pixel_2D_position(0)] % camera_width, idx_img[pixel_2D_position(1) * camera_width + pixel_2D_position(0)] / camera_width;
 
 				float closest_distance = (pixel_2D_closest(0) - pixel_2D_position(0))* (pixel_2D_closest(0) - pixel_2D_position(0)) + (pixel_2D_closest(1) - pixel_2D_position(1))*(pixel_2D_closest(1) - pixel_2D_position(1));
 
@@ -201,6 +204,9 @@ namespace energy
 
 	void Energy_Fitting::track_2D_using_Silhouette(LinearSystem &sys, int *idx_img)
 	{
+		int camera_width = model->camera->width();
+		int camera_height = model->camera->height();
+
 		vector<pair<Eigen::Matrix<float, 2, num_thetas>, Eigen::Vector2f>> outside_silhouette;
 
 		for (int i = 0; i < model->Visible_Silhouette_2D.size(); i++)
@@ -210,12 +216,12 @@ namespace energy
 			Eigen::Vector2i pixel_2D_position(model->Visible_Silhouette_2D[i]);
 
 			if ((pixel_2D_position(0) >= 0) &&
-				(pixel_2D_position(0) <= 512 - 1) &&
+				(pixel_2D_position(0) <= camera_width - 1) &&
 				(pixel_2D_position(1) >= 0) &&
-				(pixel_2D_position(1) <= 424 - 1))
+				(pixel_2D_position(1) <= camera_height - 1))
 			{
 				Eigen::Vector2i pixel_2D_closest;
-				pixel_2D_closest << idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] % 512, idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] / 512;
+				pixel_2D_closest << idx_img[pixel_2D_position(1) * camera_width + pixel_2D_position(0)] % camera_width, idx_img[pixel_2D_position(1) * camera_width + pixel_2D_position(0)] / camera_width;
 
 				float closest_distance = (pixel_2D_closest(0) - pixel_2D_position(0))* (pixel_2D_closest(0) - pixel_2D_position(0)) + (pixel_2D_closest(1) - pixel_2D_position(1))*(pixel_2D_closest(1) - pixel_2D_position(1));
 
@@ -282,6 +288,9 @@ namespace energy
 		//}
 
 	}
+
+
+
 
 	void Energy_Fitting::track_Shape_Joints(LinearSystem &sys,
 		Matrix_Nx3 &Target_joints,
@@ -384,6 +393,9 @@ namespace energy
 	}
 	void Energy_Fitting::track_Shape_2_2D(LinearSystem &sys,int *idx_img)
 	{
+		int camera_width = model->camera->width();
+		int camera_height = model->camera->height();
+
 		vector<pair<Eigen::Matrix<float, 2, num_shape_thetas>, Eigen::Vector2f>> outside_silhouette;
 
 		for (int i = 0; i < model->Visible_vertices_2D.size(); i++)
@@ -393,12 +405,12 @@ namespace energy
 			Eigen::Vector2i pixel_2D_position(model->Visible_vertices_2D[i]);
 
 			if ((pixel_2D_position(0) >= 0) &&
-				(pixel_2D_position(0) <= 512 - 1) &&
+				(pixel_2D_position(0) <= camera_width - 1) &&
 				(pixel_2D_position(1) >= 0) &&
-				(pixel_2D_position(1) <= 424 - 1))
+				(pixel_2D_position(1) <= camera_height - 1))
 			{
 				Eigen::Vector2i pixel_2D_closest;
-				pixel_2D_closest << idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] % 512, idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] / 512;
+				pixel_2D_closest << idx_img[pixel_2D_position(1) * camera_width + pixel_2D_position(0)] % camera_width, idx_img[pixel_2D_position(1) * camera_width + pixel_2D_position(0)] / camera_width;
 
 				float closest_distance = (pixel_2D_closest(0) - pixel_2D_position(0))* (pixel_2D_closest(0) - pixel_2D_position(0)) 
 					+ (pixel_2D_closest(1) - pixel_2D_position(1))*(pixel_2D_closest(1) - pixel_2D_position(1));
@@ -456,6 +468,8 @@ namespace energy
 	}
 	void Energy_Fitting::track_Shape_2_2D_uing_Silhouette(LinearSystem &sys, int *idx_img)
 	{
+		int camera_width = model->camera->width();
+		int camera_height = model->camera->height();
 		vector<pair<Eigen::Matrix<float, 2, num_shape_thetas>, Eigen::Vector2f>> outside_silhouette;
 
 		for (int i = 0; i < model->Visible_Silhouette_2D.size(); i++)
@@ -465,12 +479,12 @@ namespace energy
 			Eigen::Vector2i pixel_2D_position(model->Visible_Silhouette_2D[i]);
 
 			if ((pixel_2D_position(0) >= 0) &&
-				(pixel_2D_position(0) <= 512 - 1) &&
+				(pixel_2D_position(0) <= camera_width - 1) &&
 				(pixel_2D_position(1) >= 0) &&
-				(pixel_2D_position(1) <= 424 - 1))
+				(pixel_2D_position(1) <= camera_height - 1))
 			{
 				Eigen::Vector2i pixel_2D_closest;
-				pixel_2D_closest << idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] % 512, idx_img[pixel_2D_position(1) * 512 + pixel_2D_position(0)] / 512;
+				pixel_2D_closest << idx_img[pixel_2D_position(1) * camera_width + pixel_2D_position(0)] % camera_width, idx_img[pixel_2D_position(1) * camera_width + pixel_2D_position(0)] / camera_width;
 
 				float closest_distance = (pixel_2D_closest(0) - pixel_2D_position(0))* (pixel_2D_closest(0) - pixel_2D_position(0))
 					+ (pixel_2D_closest(1) - pixel_2D_position(1))*(pixel_2D_closest(1) - pixel_2D_position(1));

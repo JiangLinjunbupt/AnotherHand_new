@@ -33,6 +33,7 @@ enum shape_type
 //关节参数
 const int num_thetas = 26;
 const int num_shape_thetas = 20;
+const int num_joints = 21;
 typedef Eigen::Matrix<float, num_thetas, 1> Thetas;
 
 
@@ -79,9 +80,12 @@ struct TrackingError {
 	static TrackingError zero() { return{ 0, 0 }; }
 };
 
+//所有从输入可以得到的数据
 struct InputDataForTrack
 {
-	cv::Mat depth_Kinect;
+	int index;//数据序号
+
+	cv::Mat depth;
 	cv::Mat Handsegment;
 	cv::Mat Handsegment_inv;
 
@@ -89,7 +93,9 @@ struct InputDataForTrack
 	pcl::PointCloud<pcl::PointXYZ> pointcloud_filtered;
 	pcl::PointCloud<pcl::PointXYZ> pointcloud_downsample;
 
-	float params[26];
-	int idxs_img[424 * 512];
-	int inv_idxs_img[424 * 512];
+	float params[num_thetas];
+	int *idxs_img;
+	int *inv_idxs_img;
+
+	Eigen::Matrix<float, num_joints, 3> joint_read;
 };

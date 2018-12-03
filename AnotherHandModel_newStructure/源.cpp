@@ -42,13 +42,13 @@ int main(int argc,char** argv)
 	DS::GetSharedMemeryPtr = (float*)pBuf;
 #pragma endregion SharedMemery
 
-	Camera *camera = new Camera();
+	Camera *camera = new Camera(Dataset_MSRA_14);
 	HandModel *model = new HandModel(camera);
 	model->Print_fingerLength();
-	Worker *worker = new Worker(model);
-	worker->load_target_joints();
-	worker->load_target_vertices();
-	worker->fetch_Input(7);
+	Worker *worker = new Worker(model,camera);
+	//worker->load_target_joints();
+	//worker->load_target_vertices();
+	worker->fetch_Input(0);
 
 
 	DS::handmodel = model;
