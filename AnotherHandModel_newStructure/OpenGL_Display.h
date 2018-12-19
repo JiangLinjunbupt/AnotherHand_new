@@ -32,7 +32,16 @@ namespace DS {
 		None,
 	};
 
+
 	int itr = 0;
+
+	int index = 0;
+	int folder_index = 0;
+	bool LoadInput = false;
+
+	string filefolder[17] = { "1","2","3","4","5","6","7","8","9",
+		"I","IP","L","MP","RP","T","TIP","Y" };
+
 	Worker *worker;
 	HandModel *handmodel;
 	bool with_Kinect = false;
@@ -122,7 +131,9 @@ namespace DS {
 
 		if (key == 'p')
 		{
-			worker->save_DatasetParams(0);
+			worker->save_DatasetParams();
+			index++;
+			LoadInput = false;
 		}
 
 	}
@@ -602,6 +613,16 @@ namespace DS {
 
 	void idle() {
 
+		if (!LoadInput)
+		{
+			worker->dataset_path = worker->dataset_folder_path;// +filefolder[folder_index];
+			
+			cout << index << "    ---->" << worker->dataset_path;
+			worker->fetch_Input(index);
+			LoadInput = true;
+		}
+
+
 		//Begin = clock();//开始计时
 		if (!watch_result)
 		{
@@ -635,6 +656,19 @@ namespace DS {
 			{
 				worker->track_till_convergence(with_glove, shapeTrack);
 				itr++;
+
+				worker->save_DatasetParams();
+				index++;
+				LoadInput = false;
+
+
+				if (index == worker->fileAmount)
+				{
+					exit(0);
+					/*index = 0;
+					folder_index++;*/
+				}
+
 				//watch_result = true;
 			}
 
@@ -642,6 +676,7 @@ namespace DS {
 		//End = clock();//结束计时
 		//duration = double(End - Begin) / CLK_TCK;//duration就是运行函数所打的
 		//std::cout << "time is : " << duration * 1000 << std::endl;
+
 
 
 		float error = 0;
@@ -652,7 +687,7 @@ namespace DS {
 		error += (handmodel->Joint_matrix.row(20) - worker->input_data_for_track.joint_read.row(20)).norm();
 
 		error /= 5;
-		if (handmodel->camera->mode()!=CAMERAMODE(Kinect)) cout << "error is : " << error << endl;
+		//if (handmodel->camera->mode()!=CAMERAMODE(Kinect)) cout << "error is : " << error << endl;
 		mixShow();
 
 		glutPostRedisplay();

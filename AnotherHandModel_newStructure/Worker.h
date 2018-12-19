@@ -13,7 +13,7 @@ class Worker {
 
 public:
 	struct Settings {
-		int termination_max_iters = 1;
+		int termination_max_iters = 20;
 		int termination_max_rigid_iters = 1;
 	} _settings;
 	Settings*const settings = &_settings;
@@ -32,6 +32,9 @@ public:
 	MyPointCloud mypointcloud;
 	DistanceTransform distance_transform;
 
+	string dataset_folder_path;
+	string dataset_path;
+	int fileAmount;
 public:
 	//相关目标点变量
 	//拟合关节点
@@ -42,7 +45,7 @@ public:
 	void save_target_vertices();
 	void load_target_vertices();
 
-	void save_DatasetParams(int itr);
+	void save_DatasetParams();
 
 	//所有从输入可以得到的数据
 	InputDataForTrack input_data_for_track;

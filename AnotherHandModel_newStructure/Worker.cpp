@@ -51,11 +51,17 @@ void Worker::track(int iter, bool with_glove) {
 	bool eval_error = (iter == settings->termination_max_iters - 1);                 //最后一代： 估计误差
 	bool rigid_only = (iter < settings->termination_max_rigid_iters);                //termination_max_rigid_iters = 1；也就是说：第一代是rigid_only
 
+	for (int i = 0; i < num_joints; ++i)
+	{
+		this->Target_joints(i, 0) = input_data_for_track.joint_read(i, 0);
+		this->Target_joints(i, 1) = input_data_for_track.joint_read(i, 1);
+		this->Target_joints(i, 2) = input_data_for_track.joint_read(i, 2);
+	}
 
 	///--- Optimization phases	
 	LinearSystem system(num_thetas);
-	E_fitting.track(system, input_data_for_track);
-	//E_fitting.track_Joints(system, this->Target_joints, rigid_only, eval_error, tracking_error.error_3D, tracking_error.error_2D, iter);
+	//E_fitting.track(system, input_data_for_track);
+	E_fitting.track_Joints(system, this->Target_joints, rigid_only, eval_error, tracking_error.error_3D, tracking_error.error_2D, iter);
 	//E_collision.track(system);
 	//E_temporal.track(system);
 	E_limits.track(system, with_glove);
@@ -155,14 +161,19 @@ void Worker::load_target_vertices()
 	printf("Load Target vertices succeed!!!\n");
 }
 
-void Worker::save_DatasetParams(int itr)
+void Worker::save_DatasetParams()
 {
-	string filename = ".\\test\\new_Params_" + to_string(itr) + ".txt";
+	//string dataset_path = "P:\\数据集\\cvpr15_MSRAHandGestureDB\\cvpr15_MSRAHandGestureDB\\P0\\5";
+	string dataset_param_filename = "\\param.txt";
+
+	string filename = dataset_path + dataset_param_filename;
+
 	std::ofstream f;
-	f.open(filename, std::ios::out);
+	f.open(filename, std::ios::out+std::ios::app);
 	for (int i = 0; i < num_thetas; i++) {
-		f << model->Params[i] << endl;
+		f << model->Params[i] << "  ";
 	}
+	f << endl;
 	f.close();
 	printf("Save Dataset vertices succeed!!!\n");
 }
@@ -236,7 +247,7 @@ void Worker::fetch_KinectInput(int index)
 }
 void Worker::fetch_DatasetMSRA_14Inpute(int index)
 {
-	string dataset_path = "P:\\数据集\\cvpr14_MSRAHandTrackingDB\\cvpr14_MSRAHandTrackingDB\\Subject1";
+	//string dataset_path = "P:\\数据集\\cvpr14_MSRAHandTrackingDB\\cvpr14_MSRAHandTrackingDB\\Subject1";
 	string dataset_joint_filename = "\\joint.txt";
 	string dataset_depth_path = dataset_path + generate_filename(index);
 	string dataset_joint_path = dataset_path + dataset_joint_filename;
@@ -304,8 +315,8 @@ void Worker::fetch_DatasetMSRA_14Inpute(int index)
 	ifstream f_joint;
 	f_joint.open(dataset_joint_path, ios::in);
 
-	int size;
-	f_joint >> size;
+
+	f_joint >> fileAmount;
 
 	input_data_for_track.joint_read.setZero();
 
@@ -376,14 +387,13 @@ void Worker::fetch_DatasetMSRA_14Inpute(int index)
 void Worker::fetch_DatasetMSRA_15Inpute(int index)
 {
 	input_data_for_track.index = index;
-	string dataset_path = "P:\\数据集\\cvpr15_MSRAHandGestureDB\\cvpr15_MSRAHandGestureDB\\P0\\5";
+	//string dataset_path = "P:\\数据集\\cvpr15_MSRAHandGestureDB\\cvpr15_MSRAHandGestureDB\\P0\\5";
 	string dataset_joint_filename = "\\joint.txt";
 	string dataset_depth_path = dataset_path + generate_filename(index);
 	string dataset_joint_path = dataset_path + dataset_joint_filename;
 
 	input_data_for_track.depth = cv::Mat::zeros(camera->height(), camera->width(), CV_16UC1);
 	input_data_for_track.Handsegment = cv::Mat::zeros(camera->height(), camera->width(), CV_8UC1);
-
 
 	//读取深度图
 	FILE *pDepthFile = fopen(dataset_depth_path.c_str(), "rb");
@@ -458,8 +468,8 @@ void Worker::fetch_DatasetMSRA_15Inpute(int index)
 	ifstream f_joint;
 	f_joint.open(dataset_joint_path, ios::in);
 
-	int size;
-	f_joint >> size;
+
+	f_joint >> fileAmount;
 
 	input_data_for_track.joint_read.setZero();
 

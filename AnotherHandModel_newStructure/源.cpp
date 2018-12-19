@@ -48,7 +48,13 @@ int main(int argc,char** argv)
 	Worker *worker = new Worker(model,camera);
 	//worker->load_target_joints();
 	//worker->load_target_vertices();
-	worker->fetch_Input(0);
+
+	//   "P:\\数据集\\cvpr15_MSRAHandGestureDB\\cvpr15_MSRAHandGestureDB\\P0\\5";
+	//   "P:\\数据集\\cvpr14_MSRAHandTrackingDB\\cvpr14_MSRAHandTrackingDB\\Subject1";
+
+
+	worker->dataset_folder_path = "P:\\数据集\\cvpr14_MSRAHandTrackingDB\\cvpr14_MSRAHandTrackingDB\\Subject6";
+	//worker->fetch_Input(0);
 
 
 	DS::handmodel = model;
